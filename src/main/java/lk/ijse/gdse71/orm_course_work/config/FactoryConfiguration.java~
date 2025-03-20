@@ -27,10 +27,9 @@ public class FactoryConfiguration {
         configuration.addAnnotatedClass(lk.ijse.gdse71.orm_course_work.entity.Patient.class);
         configuration.addAnnotatedClass(lk.ijse.gdse71.orm_course_work.entity.Payment.class);
         configuration.addAnnotatedClass(lk.ijse.gdse71.orm_course_work.entity.TheraphySession.class);
-        configuration.addAnnotatedClass(lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram.class);
-        configuration.addAnnotatedClass(lk.ijse.gdse71.orm_course_work.entity.PatientProgramsDetails.class);
-        configuration.addAnnotatedClass(lk.ijse.gdse71.orm_course_work.entity.Theraphist.class);
-        configuration.addAnnotatedClass(lk.ijse.gdse71.orm_course_work.entity.User.class);
+        configuration.addAnnotatedClass(lk.ijse.gdse71.orm_course_work.entity.TheraphySession.class);
+        configuration.addAnnotatedClass(lk.ijse.gdse71.orm_course_work.entity.TheraphySession.class);
+        configuration.addAnnotatedClass(lk.ijse.gdse71.orm_course_work.entity.TheraphySession.class);
         sessionFactory = configuration.buildSessionFactory();
     }
     public static FactoryConfiguration getInstance(){

@@ -1,0 +1,6 @@
+package lk.ijse.gdse71.orm_course_work.entity;
+
+public class PatientProgrmasDetails {
+
+    private PatinetProgramsDetailsIds 
+}
