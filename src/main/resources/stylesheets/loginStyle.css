@@ -1,0 +1,73 @@
+.root {
+    -fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    -fx-background-color: transparent;
+}
+
+.header-label {
+    -fx-text-fill: #2d3748;
+    -fx-font-weight: bold;
+}
+
+.subheader-label {
+    -fx-text-fill: #718096;
+}
+
+.field-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a5568;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #edf2f7;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: transparent;
+    -fx-padding: 10px 15px;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #4299e1;
+    -fx-effect: dropshadow(gaussian, rgba(66, 153, 225, 0.3), 4, 0, 0, 0);
+}
+
+.login-button {
+    -fx-background-color: #3182ce;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-padding: 10px 20px;
+}
+
+.login-button:hover {
+    -fx-background-color: #2b6cb0;
+}
+
+.login-button:pressed {
+    -fx-background-color: #2c5282;
+}
+
+.forgot-password {
+    -fx-text-fill: #4299e1;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+
+.forgot-password:hover {
+    -fx-underline: true;
+}
+
+.signup-link {
+    -fx-text-fill: #3182ce;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.signup-link:hover {
+    -fx-underline: true;
+}
