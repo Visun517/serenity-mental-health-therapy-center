@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -28,7 +29,7 @@ public class Theraphist {
             joinColumns = @JoinColumn(name = "theraphists_id"),
             inverseJoinColumns = @JoinColumn(name = "theraphy_pro_id")
     )
-        private List<TheraphyProgram> theraphyPrograms;
+    private List<TheraphyProgram> theraphyPrograms = new ArrayList<>();
 
 
 

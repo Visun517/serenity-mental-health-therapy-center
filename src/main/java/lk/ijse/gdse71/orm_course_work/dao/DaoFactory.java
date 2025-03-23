@@ -1,5 +1,8 @@
 package lk.ijse.gdse71.orm_course_work.dao;
 
+import lk.ijse.gdse71.orm_course_work.dao.custom.impl.ProgramsDaoImpl;
+import lk.ijse.gdse71.orm_course_work.dao.custom.impl.TheraphistsDaoImpl;
+import lk.ijse.gdse71.orm_course_work.dao.custom.impl.TherapstsProgramsDaoImpl;
 import lk.ijse.gdse71.orm_course_work.dao.custom.impl.UserDaoImpl;
 
 public class DaoFactory {
@@ -16,7 +19,7 @@ public class DaoFactory {
         return daoFactory;
     }
     public enum DAOType{
-       USER
+       USER,THERAPISTS,PROGRAM,THERAPISTS_PROGRAM
     }
 
     @SuppressWarnings("unchecked")
@@ -25,6 +28,12 @@ public class DaoFactory {
         switch (type){
             case USER:
                 return (T) new UserDaoImpl();
+            case THERAPISTS:
+                return (T) new TheraphistsDaoImpl();
+            case PROGRAM:
+                return (T) new ProgramsDaoImpl();
+            case THERAPISTS_PROGRAM:
+                return (T) new TherapstsProgramsDaoImpl();
             default:
                 return null;
         }

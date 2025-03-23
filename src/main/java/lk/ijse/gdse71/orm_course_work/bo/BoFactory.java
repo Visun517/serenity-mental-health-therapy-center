@@ -1,5 +1,7 @@
 package lk.ijse.gdse71.orm_course_work.bo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.impl.PasswordEncryptBoImpl;
+import lk.ijse.gdse71.orm_course_work.bo.custom.impl.ProgrmasBoImpl;
+import lk.ijse.gdse71.orm_course_work.bo.custom.impl.TheraphistsBoImpl;
 import lk.ijse.gdse71.orm_course_work.bo.custom.impl.UserBoImpl;
 
 public class BoFactory {
@@ -13,7 +15,7 @@ public class BoFactory {
     }
 
     public  enum BOType{
-        USER,PASSWORD
+        USER,PASSWORD,THERAPIST,PROGRAMS
     }
 
     @SuppressWarnings("unchecked")
@@ -24,6 +26,10 @@ public class BoFactory {
                 return (T) new UserBoImpl();
             case PASSWORD:
                 return (T) new PasswordEncryptBoImpl();
+            case THERAPIST:
+                return (T) new TheraphistsBoImpl();
+            case PROGRAMS:
+                return (T) new ProgrmasBoImpl();
             default:
                 return null;
         }
