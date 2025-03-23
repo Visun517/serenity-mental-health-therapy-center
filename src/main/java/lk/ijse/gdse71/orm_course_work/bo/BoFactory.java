@@ -1,4 +1,5 @@
 package lk.ijse.gdse71.orm_course_work.bo;
+import lk.ijse.gdse71.orm_course_work.bo.custom.impl.PasswordEncryptBoImpl;
 import lk.ijse.gdse71.orm_course_work.bo.custom.impl.UserBoImpl;
 
 public class BoFactory {
@@ -12,7 +13,7 @@ public class BoFactory {
     }
 
     public  enum BOType{
-        USER
+        USER,PASSWORD
     }
 
     @SuppressWarnings("unchecked")
@@ -21,6 +22,8 @@ public class BoFactory {
         switch (type){
             case USER:
                 return (T) new UserBoImpl();
+            case PASSWORD:
+                return (T) new PasswordEncryptBoImpl();
             default:
                 return null;
         }

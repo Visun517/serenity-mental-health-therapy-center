@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="688.0" prefWidth="922.4" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.orm_course_work.controller.UserRoleMangeController">
    <children>
       <Label fx:id="lblHeader" alignment="CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="14.0" prefHeight="34.0" prefWidth="674.0" style="-fx-background-color: #3C7EFC;" text="User Role manage ">
@@ -28,9 +27,8 @@
       <TableView fx:id="tblUser" layoutX="23.0" layoutY="211.0" onMouseClicked="#tblUserOncliked" prefHeight="395.0" prefWidth="835.0">
         <columns>
           <TableColumn fx:id="colUserId" prefWidth="204.79999351501465" text="User_id" />
-            <TableColumn fx:id="colUserName" prefWidth="235.20001220703125" text="User_name" />
-            <TableColumn fx:id="colUserRole" prefWidth="187.19998168945312" text="User_role" />
-            <TableColumn fx:id="colUserPassword" prefWidth="206.4000122070313" text="User_password" />
+            <TableColumn fx:id="colUserName" prefWidth="339.1999816894531" text="User_name" />
+            <TableColumn fx:id="colUserRole" prefWidth="290.4000122070313" text="User_role" />
         </columns>
       </TableView>
       <Button fx:id="btnSave" layoutX="76.0" layoutY="628.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="26.0" prefWidth="149.0" text="Save" />

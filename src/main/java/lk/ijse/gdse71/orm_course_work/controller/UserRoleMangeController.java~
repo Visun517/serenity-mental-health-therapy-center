@@ -113,7 +113,6 @@ public class UserRoleMangeController implements Initializable {
 
             if (userBo.getUser(userDto.getUsername()) != null){
                 new Alert(Alert.AlertType.ERROR, "User is already exist...!").show();
-                refresh();
                 return;
             }
             boolean isSaved = userBo.save(userDto);
