@@ -2,15 +2,16 @@ package lk.ijse.gdse71.orm_course_work.bo.custom;
 
 import lk.ijse.gdse71.orm_course_work.bo.SuperBo;
 import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
+import lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ProgramsBo extends SuperBo {
      List<String> getAllPrograms() throws SQLException;
      String getNextId() throws SQLException;
      List<ProgramDto> getAll() throws SQLException;
-     boolean save(ProgramDto programDto) throws SQLException;
-     boolean update(ProgramDto programDto) throws SQLException;
-     boolean delete(String id) throws SQLException;
 }

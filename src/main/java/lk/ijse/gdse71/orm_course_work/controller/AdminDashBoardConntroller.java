@@ -85,7 +85,10 @@ public class AdminDashBoardConntroller {
     }
 
     @FXML
-    void btnTheraphyProgramOnAction(ActionEvent event) {
+    void btnTheraphyProgramOnAction(ActionEvent event) throws IOException {
+        ancSecondMainChild.getChildren().clear();
+        Parent parent = FXMLLoader.load(getClass().getResource("/view/TheraphyProgramManagment.fxml"));
+        ancSecondMainChild.getChildren().add(parent);
 
     }
 
