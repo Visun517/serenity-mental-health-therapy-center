@@ -58,7 +58,9 @@ public class AdminDashBoardConntroller {
 
     @FXML
     void btnPatientMangmentOnAction(ActionEvent event) throws IOException {
-
+        ancSecondMainChild.getChildren().clear();
+        Parent parent = FXMLLoader.load(getClass().getResource("/view/PatientMangmentBoard.fxml"));
+        ancSecondMainChild.getChildren().add(parent);
     }
 
     @FXML
