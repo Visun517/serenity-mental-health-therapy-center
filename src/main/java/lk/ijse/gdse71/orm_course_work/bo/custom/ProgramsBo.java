@@ -13,4 +13,5 @@ public interface ProgramsBo extends SuperBo {
      boolean save(ProgramDto programDto) throws SQLException;
      boolean update(ProgramDto programDto) throws SQLException;
      boolean delete(String id) throws SQLException;
+     String getProgramName(String selectedItem);
 }

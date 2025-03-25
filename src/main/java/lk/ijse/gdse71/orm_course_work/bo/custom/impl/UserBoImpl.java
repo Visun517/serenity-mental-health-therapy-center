@@ -24,7 +24,6 @@ public class UserBoImpl implements UserBo {
     @Override
     public String getNextId() throws SQLException {
         String id = userDao.getNextId();
-
         if (id != null) {
             String lastId = id.substring(1);
             String substring = lastId.substring(1);

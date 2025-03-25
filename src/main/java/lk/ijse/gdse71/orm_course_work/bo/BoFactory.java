@@ -12,7 +12,7 @@ public class BoFactory {
     }
 
     public  enum BOType{
-        USER,PASSWORD,THERAPIST,PROGRAMS,PATIENT
+        USER,PASSWORD,THERAPIST,PROGRAMS,PATIENT,SESSION
     }
 
     @SuppressWarnings("unchecked")
@@ -29,6 +29,8 @@ public class BoFactory {
                 return (T) new ProgrmasBoImpl();
             case PATIENT:
                 return (T) new PatientBoImpl();
+            case SESSION:
+                return (T) new SessionBoImpl();
             default:
                 return null;
         }

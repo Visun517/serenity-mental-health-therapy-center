@@ -95,4 +95,12 @@ public class PatientDaoImpl implements PatientDao {
 
         }
     }
+
+    @Override
+    public Patient getPatient(String patientId) {
+        Session session = factoryConfiguration.getSession();
+        Patient patient = session.get(Patient.class, patientId);
+        session.close();
+        return patient;
+    }
 }

@@ -150,6 +150,6 @@ public class PatientBoImpl implements PatientBo {
     @Override
     public List<PatientDto> getFullEnrolledPatients() {
         queryDao.getFullEnrolledPatients();
-        return null; 
+        return null;
     }
 }

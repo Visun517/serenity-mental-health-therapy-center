@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="648.0" prefWidth="882.4" style="-fx-background-color: #f5f5f7;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.orm_course_work.controller.SessionSchedulingController">
+    <children>
+        <VBox spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <!-- Header -->
+                <Label fx:id="lblHeader" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" style="-fx-background-color: #4682B4; -fx-background-radius: 10; -fx-text-fill: white;" text="Session Scheduling Management">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <effect>
+                        <DropShadow color="#00000040" height="10.0" radius="4.5" width="10.0" />
+                    </effect>
+                    <padding>
+                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                    </padding>
+                </Label>
+
+                <!-- Form Container -->
+                <GridPane hgap="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;" vgap="15.0">
+                    <effect>
+                        <DropShadow color="#00000040" height="8.0" radius="3.5" width="8.0" />
+                    </effect>
+
+                    <!-- First Row -->
+                    <Label style="-fx-font-weight: bold;" text="Session ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label fx:id="lblSessionIdShow" style="-fx-background-color: #f0f0f0; -fx-background-radius: 5; -fx-padding: 5;" text="Auto Generated" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label style="-fx-font-weight: bold;" text="Date" GridPane.columnIndex="4" />
+                    <DatePicker fx:id="datePicker" prefWidth="200" GridPane.columnIndex="5" />
+
+                    <!-- Second Row -->
+                    <Label style="-fx-font-weight: bold;" text="Time" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="txtTime" prefWidth="200" promptText="HH:MM" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label style="-fx-font-weight: bold;" text="Status" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="cmbStatus" prefWidth="200" promptText="Select Status" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+
+                    <!-- Third Row -->
+                    <Label style="-fx-font-weight: bold;" text="Patient ID" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <ComboBox fx:id="cmbPatientIds" prefWidth="200" promptText="Select Patient" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                    <Label style="-fx-font-weight: bold;" text="Therapist ID" GridPane.rowIndex="3" />
+                    <ComboBox fx:id="cmbThearapistId" prefWidth="200" promptText="Select Therapist" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                    <!-- Fourth Row -->
+                    <Label style="-fx-font-weight: bold;" text="Therapy Programs" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                    <ComboBox fx:id="cmbPrograms" onAction="#cmbProgramsOnAction" prefWidth="200" promptText="Select Program" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+               <Label fx:id="lblProName" prefHeight="24.0" prefWidth="198.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <!-- Table -->
+                <TableView fx:id="tblSessions" onMouseClicked="#tblSessionOncliked" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e0e0;" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colSessionId" prefWidth="120" text="Session ID" />
+                        <TableColumn fx:id="colDate" prefWidth="120" text="Date" />
+                        <TableColumn fx:id="colTime" prefWidth="120" text="Time" />
+                        <TableColumn fx:id="colStatus" prefWidth="120" text="Status" />
+                        <TableColumn fx:id="colPatinetiId" prefWidth="120" text="Patient ID" />
+                        <TableColumn fx:id="colTherapistId" prefWidth="120" text="Therapist ID" />
+                        <TableColumn fx:id="colPrograms" prefWidth="130" text="Programs" />
+                    </columns>
+                    <effect>
+                        <DropShadow color="#00000040" height="8.0" radius="3.5" width="8.0" />
+                    </effect>
+                </TableView>
+
+                <!-- Action Buttons -->
+                <HBox alignment="CENTER" spacing="30.0">
+                    <children>
+                        <Button fx:id="btnBook" onAction="#btnBookOnAction" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Book">
+                            <effect>
+                                <DropShadow color="#00000040" height="5.0" radius="2.0" width="5.0" />
+                            </effect>
+                        </Button>
+                        <Button fx:id="btnRechedule" onAction="#btnRecheduleOnAction" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Reschedule">
+                            <effect>
+                                <DropShadow color="#00000040" height="5.0" radius="2.0" width="5.0" />
+                            </effect>
+                        </Button>
+                        <Button fx:id="btnCancel" onAction="#btnCancelOnAction" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Cancel">
+                            <effect>
+                                <DropShadow color="#00000040" height="5.0" radius="2.0" width="5.0" />
+                            </effect>
+                        </Button>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

@@ -30,4 +30,7 @@ public class Theraphist {
             inverseJoinColumns = @JoinColumn(name = "theraphy_pro_id")
     )
     private List<TheraphyProgram> theraphyPrograms = new ArrayList<>();
+
+
+
 }

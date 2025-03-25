@@ -147,7 +147,6 @@ public class UserRoleMangeController implements Initializable {
             }else {
                 new Alert(Alert.AlertType.ERROR, "User is not updated...!").show();
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }

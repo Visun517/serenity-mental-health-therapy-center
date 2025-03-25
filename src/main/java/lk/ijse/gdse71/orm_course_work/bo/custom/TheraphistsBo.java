@@ -6,7 +6,9 @@ import lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.List;
 
 public interface TheraphistsBo extends SuperBo {
@@ -16,5 +18,5 @@ public interface TheraphistsBo extends SuperBo {
      boolean delete(String id) throws SQLException;
      boolean update(TherapistDto therapistDto ,List<String> programNames) throws SQLException;
      List<TheraphyProgram> getAssigningPrograms(String therapistId) throws SQLException;
-
+     List<TherapistDto> getAvailableTherapist(String programId, Time time, Date date);
 }

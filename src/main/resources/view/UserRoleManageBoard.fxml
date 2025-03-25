@@ -99,7 +99,7 @@
                     <columns>
                         <TableColumn fx:id="colUserId" prefWidth="200.0" text="User ID" />
                         <TableColumn fx:id="colUserName" prefWidth="340.0" text="Username" />
-                        <TableColumn fx:id="colUserRole" prefWidth="290.0" text="User Role" />
+                        <TableColumn fx:id="colUserRole" prefWidth="340.0000366210937" text="User Role" />
                     </columns>
                     <effect>
                         <DropShadow color="#00000040" height="8.0" radius="3.5" width="8.0" />

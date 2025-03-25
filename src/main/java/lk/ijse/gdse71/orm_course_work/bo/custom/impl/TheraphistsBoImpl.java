@@ -3,13 +3,16 @@ package lk.ijse.gdse71.orm_course_work.bo.custom.impl;
 import lk.ijse.gdse71.orm_course_work.bo.custom.TheraphistsBo;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
 import lk.ijse.gdse71.orm_course_work.dao.custom.ProgrmasDao;
+import lk.ijse.gdse71.orm_course_work.dao.custom.QueryDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.TheraphistsDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.impl.TherapstsProgramsDaoImpl;
 import lk.ijse.gdse71.orm_course_work.dto.TherapistDto;
 import lk.ijse.gdse71.orm_course_work.entity.Theraphist;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,7 @@ public class TheraphistsBoImpl implements TheraphistsBo {
     private final TheraphistsDao theraphistsDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.THERAPISTS);
     private final ProgrmasDao progrmasDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.PROGRAM);
     private final TherapstsProgramsDaoImpl therapstsProgramsDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.THERAPISTS_PROGRAM);
+    private final QueryDao queryDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.QUERY);
     @Override
     public String getNextId() throws SQLException {
         String id = theraphistsDao.getNextId();
@@ -103,6 +107,22 @@ public class TheraphistsBoImpl implements TheraphistsBo {
             assignPrograms1.add(theraphyProgram);
         }
         return assignPrograms1;
+    }
+
+    @Override
+    public List<TherapistDto> getAvailableTherapist(String programId, Time time, Date date) {
+        List<Theraphist> therapists = queryDao.getAvailableTherapist(programId, time, date);
+
+        List<TherapistDto> therapistDtos = new ArrayList<>();
+        for (Theraphist therapist : therapists) {
+            TherapistDto therapistDto = new TherapistDto();
+            therapistDto.setTheraphists_id(therapist.getTheraphists_id());
+            therapistDto.setName(therapist.getName());
+            therapistDto.setContact(therapist.getContact());
+            therapistDto.setEmail(therapist.getEmail());
+            therapistDtos.add(therapistDto);
+        }
+        return therapistDtos;
     }
 
 }

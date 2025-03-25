@@ -98,6 +98,14 @@ public class ProgramsDaoImpl implements ProgrmasDao {
     }
 
     @Override
+    public TheraphyProgram getProgramName(String selectedItem) {
+        Session session = factoryConfiguration.getSession();
+        TheraphyProgram theraphyProgram = session.get(TheraphyProgram.class, selectedItem);
+        session.close();
+        return theraphyProgram;
+    }
+
+    @Override
     public List<String> getAllPrograms() throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();

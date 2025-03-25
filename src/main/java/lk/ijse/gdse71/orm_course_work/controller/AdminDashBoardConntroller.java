@@ -74,7 +74,10 @@ public class AdminDashBoardConntroller {
     }
 
     @FXML
-    void btnSessionSchedulingOnAction(ActionEvent event) {
+    void btnSessionSchedulingOnAction(ActionEvent event) throws IOException {
+        ancSecondMainChild.getChildren().clear();
+        Parent parent = FXMLLoader.load(getClass().getResource("/view/SessionSchedulingBoard.fxml"));
+        ancSecondMainChild.getChildren().add(parent);
 
     }
 

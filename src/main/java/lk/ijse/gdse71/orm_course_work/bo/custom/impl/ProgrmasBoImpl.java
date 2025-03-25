@@ -77,4 +77,10 @@ public class ProgrmasBoImpl implements ProgramsBo {
     public boolean delete(String id) throws SQLException {
         return progrmasDao.delete(id);
     }
+
+    @Override
+    public String getProgramName(String selectedItem) {
+        TheraphyProgram programName = progrmasDao.getProgramName(selectedItem);
+        return programName.getName();
+    }
 }
