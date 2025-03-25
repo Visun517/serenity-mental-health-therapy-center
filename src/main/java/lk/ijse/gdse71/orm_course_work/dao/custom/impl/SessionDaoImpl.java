@@ -2,11 +2,15 @@ package lk.ijse.gdse71.orm_course_work.dao.custom.impl;
 
 import lk.ijse.gdse71.orm_course_work.config.FactoryConfiguration;
 import lk.ijse.gdse71.orm_course_work.dao.custom.SessionDao;
+import lk.ijse.gdse71.orm_course_work.dto.SessionDto;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphySession;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +89,24 @@ public class SessionDaoImpl implements SessionDao {
             }
         }
     }
+
+    @Override
+    public List<TheraphySession> getTherapistSchedule(String therapistId) {
+        Session session = factoryConfiguration.getSession();
+        try {
+            Query<TheraphySession> query = session.createQuery(
+                    "FROM TheraphySession ts WHERE ts.theraphist.theraphists_id = :therapistId AND ts.date >= :today",
+                    TheraphySession.class
+            );
+            query.setParameter("therapistId", therapistId);
+            query.setParameter("today", Date.valueOf(LocalDate.now()));
+            return query.getResultList();
+
+        } finally {
+            session.close();
+        }
+    }
+
     @Override
     public boolean update(TheraphySession dto) throws SQLException {
         return false;

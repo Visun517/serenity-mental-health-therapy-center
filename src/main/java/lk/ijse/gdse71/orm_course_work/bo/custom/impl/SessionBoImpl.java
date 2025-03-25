@@ -8,6 +8,7 @@ import lk.ijse.gdse71.orm_course_work.dao.custom.SessionDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.TheraphistsDao;
 import lk.ijse.gdse71.orm_course_work.dto.SessionDto;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphySession;
+import org.hibernate.Session;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -92,5 +93,25 @@ public class SessionBoImpl implements SessionBo {
         theraphySession.setStatus(sessionDto.getStatus());
 
         return sessionDao.reschedule(theraphySession);
+    }
+
+    @Override
+    public List<SessionDto> getTherapistSchedule(String therapistId) {
+        List<TheraphySession> therapistSchedule = sessionDao.getTherapistSchedule(therapistId);
+
+        List<SessionDto> sessionDtos = new ArrayList<>();
+        for (TheraphySession session : therapistSchedule){
+            SessionDto sessionDto = new SessionDto();
+            sessionDto.setSession_id(session.getSession_id());
+            sessionDto.setDate(session.getDate());
+            sessionDto.setTime(session.getTime());
+            sessionDto.setStatus(session.getStatus());
+            sessionDto.setPatient_id(session.getPatient().getPatient_id());
+            sessionDto.setTherapist_id(session.getTheraphist().getTheraphists_id());
+            sessionDto.setProgram_id(session.getTheraphyProgram().getTheraphy_pro_id());
+
+            sessionDtos.add(sessionDto);
+        }
+       return sessionDtos;
     }
 }

@@ -4,10 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import lk.ijse.gdse71.orm_course_work.HelloApplication;
 import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.ProgramsBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.TheraphistsBo;
@@ -15,6 +19,7 @@ import lk.ijse.gdse71.orm_course_work.dto.TherapistDto;
 import lk.ijse.gdse71.orm_course_work.dto.tm.TherapistTm;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -198,11 +203,6 @@ public class TheraphistsManagmentController implements Initializable {
 
     }
 
-    @FXML
-    void btnTrackscheduleOnAction(ActionEvent event) {
-
-    }
-
     void refresh(){
         setProgramsCmb();
         try {
@@ -246,5 +246,15 @@ public class TheraphistsManagmentController implements Initializable {
         }
     }
 
+
+    @FXML
+    void btnTrackscheduleOnAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/TrackSchedulesBoard.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage1 = new Stage();
+        stage1.setTitle("TrackSchedules Board..!");
+        stage1.setScene(scene);
+        stage1.show();
+    }
 
 }

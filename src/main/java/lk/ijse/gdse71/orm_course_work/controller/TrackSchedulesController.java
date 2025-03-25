@@ -1,0 +1,117 @@
+package lk.ijse.gdse71.orm_course_work.controller;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
+import lk.ijse.gdse71.orm_course_work.bo.custom.SessionBo;
+import lk.ijse.gdse71.orm_course_work.bo.custom.TheraphistsBo;
+import lk.ijse.gdse71.orm_course_work.dto.SessionDto;
+import lk.ijse.gdse71.orm_course_work.dto.TherapistDto;
+import lk.ijse.gdse71.orm_course_work.dto.tm.SessionTm;
+
+import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class TrackSchedulesController implements Initializable {
+
+    @FXML
+    private ComboBox<String> cmbIds;
+
+    @FXML
+    private TableColumn<SessionTm, Date> colDate;
+
+    @FXML
+    private TableColumn<SessionTm, String> colProgramId;
+
+    @FXML
+    private TableColumn<SessionTm, String> colSessionId;
+
+    @FXML
+    private TableColumn<SessionTm, String> colStatus;
+
+    @FXML
+    private TableColumn<SessionTm, Time> colTime;
+
+    @FXML
+    private Label lblHeader;
+
+    @FXML
+    private Label lblTherAPISTiD;
+
+    @FXML
+    private TableView<SessionTm> tblSchedule;
+
+    @FXML
+    private Button btnRefresh;
+
+    private final TheraphistsBo theraphistsBo = BoFactory.getInstance().getBo(BoFactory.BOType.THERAPIST);
+    private final SessionBo sessionBo = BoFactory.getInstance().getBo(BoFactory.BOType.SESSION);
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colProgramId.setCellValueFactory(new PropertyValueFactory<>("program_id"));
+        colSessionId.setCellValueFactory(new PropertyValueFactory<>("session_id"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
+
+        try {
+            getAllTherapist();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    void btnRefreshOnAction(ActionEvent event) {
+        refresh();
+    }
+    public void refresh(){
+        cmbIds.getSelectionModel().select("");
+        tblSchedule.getSelectionModel().clearSelection();
+    }
+
+    public void getAllTherapist() throws SQLException {
+        List<TherapistDto> all = theraphistsBo.getAll();
+        ObservableList<String> ids = FXCollections.observableArrayList();
+
+        for (TherapistDto therapistDto : all) {
+            ids.add(therapistDto.getTheraphists_id());
+        }
+        cmbIds.setItems(ids);
+    }
+
+    @FXML
+    void cmbIdsOnAction(ActionEvent event) {
+        String therapistId = cmbIds.getSelectionModel().getSelectedItem();
+        List<SessionDto> therapistSchedule = sessionBo.getTherapistSchedule(therapistId);
+        if (therapistSchedule.isEmpty()){
+            new Alert(Alert.AlertType.INFORMATION, "This therapist have no schedules...!").show();
+            refresh();
+        }
+        ObservableList<SessionTm> sessionTms = FXCollections.observableArrayList();
+
+        for (SessionDto sessionDto : therapistSchedule) {
+            SessionTm sessionTm = new SessionTm();
+            sessionTm.setSession_id(sessionDto.getSession_id());
+            sessionTm.setDate(sessionDto.getDate());
+            sessionTm.setStatus(sessionDto.getStatus());
+            sessionTm.setTime(sessionDto.getTime());
+            sessionTm.setPatient_id(sessionDto.getPatient_id());
+            sessionTm.setProgram_id(sessionDto.getProgram_id());
+            sessionTm.setTherapist_id(sessionDto.getTherapist_id());
+
+            sessionTms.add(sessionTm);
+        }
+        tblSchedule.setItems(sessionTms);
+    }
+}

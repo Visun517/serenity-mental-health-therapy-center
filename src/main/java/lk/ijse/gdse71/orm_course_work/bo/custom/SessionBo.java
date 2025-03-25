@@ -12,4 +12,5 @@ public interface SessionBo extends SuperBo {
     boolean book(SessionDto sessionDto) throws SQLException;
     boolean cancel(SessionDto sessionDto)throws SQLException;
     boolean reschedule(SessionDto sessionDto) throws SQLException;
+    List<SessionDto> getTherapistSchedule(String therapistId);
 }
