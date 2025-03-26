@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="572.0" prefWidth="937.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.orm_course_work.controller.FilterController">
+   <children>
+      <Label fx:id="lblHeader" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="39.0" prefWidth="916.0" style="-fx-background-color: #4682B4; -fx-background-radius: 10; -fx-text-fill: white;" text="Filter patient ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <effect>
+            <DropShadow color="#00000040" height="10.0" radius="4.5" width="10.0" />
+         </effect>
+         <padding>
+            <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+         </padding>
+      </Label>
+      <AnchorPane layoutX="14.0" layoutY="66.0" prefHeight="486.0" prefWidth="910.0" style="-fx-background-color: #4682B4;">
+         <children>
+            <Label fx:id="lblStatus" alignment="CENTER" layoutX="27.0" layoutY="19.0" prefHeight="27.0" prefWidth="136.0" style="-fx-font-weight: bold; -fx-background-color: white;" text="Status" />
+            <ComboBox fx:id="cmbStatus" layoutX="184.0" layoutY="20.0" prefHeight="26.0" prefWidth="213.0" />
+            <Label fx:id="lblProgramId" alignment="CENTER" layoutX="527.0" layoutY="19.0" prefHeight="27.0" prefWidth="100.0" style="-fx-font-weight: bold; -fx-background-color: white;" text="Program id" />
+            <ComboBox fx:id="cmbProgrmaId" layoutX="653.0" layoutY="20.0" prefHeight="26.0" prefWidth="178.0" />
+            <Button fx:id="btnSearchOnStatus" layoutX="74.0" layoutY="63.0" mnemonicParsing="false" onAction="#btnSearchOnAction" prefHeight="26.0" prefWidth="250.0" text="Search" />
+            <TableView fx:id="tblFilter" layoutX="20.0" layoutY="102.0" prefHeight="329.0" prefWidth="875.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e0e0;">
+               <columns>
+                  <TableColumn fx:id="colPatientId" prefWidth="120" text="Patient ID" />
+                  <TableColumn fx:id="colName" prefWidth="120" text="Name" />
+                  <TableColumn fx:id="colContact" prefWidth="120" text="Contact" />
+                  <TableColumn fx:id="colEmail" prefWidth="160.800048828125" text="Email" />
+                  <TableColumn fx:id="colSessionId" prefWidth="114.39996337890625" text="Session id" />
+                  <TableColumn fx:id="colDate" prefWidth="140.00006103515625" text="Date" />
+                  <TableColumn fx:id="colPrograms" prefWidth="93.5999755859375" text="Programs" />
+               </columns>
+               <effect>
+                  <DropShadow color="#00000040" height="8.0" radius="3.5" width="8.0" />
+               </effect>
+            </TableView>
+            <Button fx:id="btnSearchOnProgram" layoutX="559.0" layoutY="63.0" mnemonicParsing="false" onAction="#btnSearchOnProgramOnAction" prefHeight="26.0" prefWidth="250.0" text="Search" />
+            <Button fx:id="btnClear" layoutX="308.0" layoutY="444.0" mnemonicParsing="false" onAction="#btnClearOnActionn" prefHeight="26.0" prefWidth="250.0" text="Clear All" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

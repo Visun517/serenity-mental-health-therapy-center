@@ -73,7 +73,6 @@ public class QueryDaoImpl implements QueryDao {
             Query<Object[]> query = session.createQuery("SELECT p.patient_id, p.name, p.contact, p.email, s.session_id, s.date, s.theraphyProgram.theraphy_pro_id " +
                     "FROM Patient p JOIN p.sessions s WHERE s.status = :status", Object[].class);
             query.setParameter("status", status);
-
             List<Object[]> list = query.getResultList();
 
             List<FilterDto> filterDtos = new ArrayList<>();
@@ -107,7 +106,6 @@ public class QueryDaoImpl implements QueryDao {
             Query<Object[]> query = session.createQuery("SELECT p.patient_id, p.name, p.contact, p.email, s.session_id, s.date, s.theraphyProgram.theraphy_pro_id " +
                     "FROM Patient p JOIN p.sessions s WHERE s.theraphyProgram.theraphy_pro_id = :programId", Object[].class);
             query.setParameter("programId", programId);
-
             List<Object[]> list = query.getResultList();
 
             List<FilterDto> filterDtos = new ArrayList<>();

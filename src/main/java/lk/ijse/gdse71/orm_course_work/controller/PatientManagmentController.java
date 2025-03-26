@@ -153,7 +153,13 @@ public class PatientManagmentController implements Initializable {
     }
 
     @FXML
-    void btnFilterOnAction(ActionEvent event) {
+    void btnFilterOnAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/FilterBoard.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage1 = new Stage();
+        stage1.setTitle("Filter Patient..!");
+        stage1.setScene(scene);
+        stage1.show();
 
     }
 

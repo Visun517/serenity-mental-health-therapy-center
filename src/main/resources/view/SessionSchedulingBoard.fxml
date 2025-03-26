@@ -90,7 +90,7 @@
                         <TableColumn fx:id="colStatus" prefWidth="120" text="Status" />
                         <TableColumn fx:id="colPatinetiId" prefWidth="120" text="Patient ID" />
                         <TableColumn fx:id="colTherapistId" prefWidth="120" text="Therapist ID" />
-                        <TableColumn fx:id="colPrograms" prefWidth="130" text="Programs" />
+                        <TableColumn fx:id="colPrograms" prefWidth="130" text="Programs id" />
                     </columns>
                     <effect>
                         <DropShadow color="#00000040" height="8.0" radius="3.5" width="8.0" />

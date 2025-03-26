@@ -7,9 +7,11 @@ import lk.ijse.gdse71.orm_course_work.dao.custom.PatientDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.PatientProgrmasDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.ProgrmasDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.QueryDao;
+import lk.ijse.gdse71.orm_course_work.dto.FilterDto;
 import lk.ijse.gdse71.orm_course_work.dto.PatientDto;
 import lk.ijse.gdse71.orm_course_work.entity.*;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +152,16 @@ public class PatientBoImpl implements PatientBo {
     @Override
     public List<PatientDto> getFullEnrolledPatients() {
         queryDao.getFullEnrolledPatients();
-        return null; 
+        return null;
+    }
+
+    @Override
+    public List<FilterDto> filterByStatus(String status) {
+        return queryDao.filterByStatus(status);
+    }
+
+    @Override
+    public List<FilterDto> filterByProgramId(String programId) {
+        return queryDao.filterByProgramId(programId);
     }
 }
