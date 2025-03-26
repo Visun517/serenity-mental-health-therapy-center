@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="648.0" prefWidth="882.4" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.orm_course_work.controller.PatinetMoreDetailsController">
    <children>
       <Label fx:id="lblHeader" alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="20.0" prefHeight="33.0" prefWidth="847.0" style="-fx-background-color: #4682B4; -fx-background-radius: 10; -fx-text-fill: white;" text="Patient more Details">
@@ -26,7 +25,7 @@
       </Label>
       <AnchorPane layoutX="19.0" layoutY="72.0" prefHeight="264.0" prefWidth="847.0" style="-fx-background-color: #4682B4;">
          <children>
-            <TableView fx:id="tblFullEnrolled" layoutX="13.0" layoutY="55.0" onMouseClicked="#tblPatinetOnCliked" prefHeight="194.0" prefWidth="825.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e0e0;">
+            <TableView fx:id="tblFullEnrolled" layoutX="13.0" layoutY="55.0" prefHeight="194.0" prefWidth="825.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e0e0;">
                <columns>
                   <TableColumn fx:id="colPatinetId" prefWidth="72.80001640319824" text="Patient Id" />
                   <TableColumn fx:id="colName" prefWidth="195.19998931884766" text="Name" />
@@ -45,18 +44,18 @@
          <children>
             <TableView fx:id="tblPatientPrgrams" layoutX="11.0" layoutY="101.0" onMouseClicked="#tblPatinetOnCliked" prefHeight="148.0" prefWidth="826.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e0e0;">
                <columns>
-                  <TableColumn fx:id="colPatinetId1" prefWidth="72.80001640319824" text="Patient Id" />
-                  <TableColumn fx:id="colName1" prefWidth="195.19998931884766" text="Name" />
-                  <TableColumn fx:id="colContact1" prefWidth="143.20001220703125" text="Contact" />
-                  <TableColumn fx:id="colEmail1" prefWidth="131.99996948242188" text="Email" />
-                  <TableColumn fx:id="colHistory1" prefWidth="273.60009765625" text="History" />
+                  <TableColumn fx:id="colProgramId" prefWidth="80.80001831054688" text="Program id  " />
+                  <TableColumn fx:id="colNamePro" prefWidth="187.9999771118164" text="Name" />
+                  <TableColumn fx:id="colFee" prefWidth="143.20001220703125" text="Fee" />
+                  <TableColumn fx:id="colDuration" prefWidth="131.99996948242188" text="Duration" />
+                  <TableColumn fx:id="colDescription" prefWidth="273.60009765625" text="Description" />
                </columns>
                <effect>
                   <DropShadow color="#00000040" height="8.0" radius="3.5" width="8.0" />
                </effect>
             </TableView>
             <Label fx:id="lblChoosing" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="56.0" prefHeight="27.0" prefWidth="120.0" style="-fx-background-color: white;" text="Choose the patient" />
-            <ComboBox fx:id="cmbPatient" layoutX="162.0" layoutY="56.0" prefHeight="26.0" prefWidth="254.0" />
+            <ComboBox fx:id="cmbPatient" layoutX="170.0" layoutY="56.0" onAction="#cmbPatientOnAction" prefHeight="26.0" prefWidth="254.0" />
             <Label fx:id="lblPatientProgram" alignment="CENTER" contentDisplay="CENTER" layoutX="297.0" layoutY="14.0" prefHeight="27.0" prefWidth="254.0" style="-fx-background-color: white;" text="Patient Programs" />
             <Label fx:id="lblPatientName" alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="56.0" prefHeight="27.0" prefWidth="162.0" style="-fx-background-color: white;" />
             <Button fx:id="btnSearch" layoutX="630.0" layoutY="54.0" mnemonicParsing="false" onAction="#btnSearchOnAction" prefHeight="30.0" prefWidth="162.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Search">

@@ -25,6 +25,6 @@ public class Patient {
     private List<Payment> payment;
     @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<TheraphySession> sessions;
-    @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<PatientProgramsDetails> patientProgramsDetails;
 }

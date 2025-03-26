@@ -22,4 +22,5 @@ public interface PatientBo extends SuperBo {
     List<PatientDto> getFullEnrolledPatients();
     List<FilterDto> filterByStatus(String status);
     List<FilterDto> filterByProgramId(String programId);
+    PatientDto getPatinet(String patientId);
 }

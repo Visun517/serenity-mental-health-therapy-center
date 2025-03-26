@@ -79,7 +79,7 @@ public class FilterController implements Initializable {
     private TableView<FilterTm> tblFilter;
 
     private final ProgramsBo programsBo = BoFactory.getInstance().getBo(BoFactory.BOType.PROGRAMS);
-    private final PatientBo patientBo = BoFactory.getInstance().getBo(BoFactory.BOType.PATIENT);
+    private final PatientBo patientBo =  BoFactory.getInstance().getBo(BoFactory.BOType.PATIENT);
 
 
     @Override
@@ -101,11 +101,10 @@ public class FilterController implements Initializable {
 
     }
 
-    public void setStatus() {
+    public void setStatus(){
         ObservableList<String> values = FXCollections.observableArrayList("Cancelled", "Scheduled", "Completed");
         cmbStatus.setItems(values);
     }
-
     public void setProgramIds() throws SQLException {
         List<ProgramDto> all = programsBo.getAll();
         ObservableList<String> ids = FXCollections.observableArrayList();
@@ -114,8 +113,7 @@ public class FilterController implements Initializable {
         }
         cmbProgrmaId.setItems(ids);
     }
-
-    public void filterByStatus(String status) {
+    public void filterByStatus(String status){
         List<FilterDto> filterDtos = patientBo.filterByStatus(status);
         ObservableList<FilterTm> observableList = FXCollections.observableArrayList();
 
@@ -146,13 +144,13 @@ public class FilterController implements Initializable {
 
     }
 
-    public void refresh() {
+    public void refresh(){
         cmbProgrmaId.getSelectionModel().select("");
         cmbStatus.getSelectionModel().select("");
         tblFilter.getItems().clear();
     }
 
-    public void filterByProgram(String programId) {
+    public void filterByProgram(String programId){
         List<FilterDto> filterDtos = patientBo.filterByProgramId(programId);
         ObservableList<FilterTm> observableList = FXCollections.observableArrayList();
 

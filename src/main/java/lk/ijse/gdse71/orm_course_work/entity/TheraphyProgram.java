@@ -22,7 +22,7 @@ public class TheraphyProgram {
     private double fee;
     private String description;
 
-    @OneToMany(mappedBy = "theraphyProgram" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "theraphyProgram" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     private List<PatientProgramsDetails> patientProgramsDetails;
     @OneToMany(mappedBy = "theraphyProgram" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<Payment> payments;

@@ -135,8 +135,16 @@ public class QueryDaoImpl implements QueryDao {
 
     @Override
     public List<Patient> getFullEnrolledPatients() {
-        return List.of();
-    }
+        Session session = factoryConfiguration.getSession();
 
+        try {
+            return session.createQuery("SELECT p FROM Patient p " + "JOIN p.patientProgramsDetails ps " + "GROUP BY p " + "HAVING COUNT(DISTINCT ps.theraphyProgram) = (SELECT COUNT(*) FROM TheraphyProgram)", Patient.class).getResultList();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+
+        }
+    }
 
 }

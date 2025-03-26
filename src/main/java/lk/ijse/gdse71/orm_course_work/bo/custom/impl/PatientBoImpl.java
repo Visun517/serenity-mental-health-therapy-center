@@ -9,6 +9,7 @@ import lk.ijse.gdse71.orm_course_work.dao.custom.ProgrmasDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.QueryDao;
 import lk.ijse.gdse71.orm_course_work.dto.FilterDto;
 import lk.ijse.gdse71.orm_course_work.dto.PatientDto;
+import lk.ijse.gdse71.orm_course_work.dto.PatientProgramsDetailsDto;
 import lk.ijse.gdse71.orm_course_work.entity.*;
 
 import java.sql.Date;
@@ -151,8 +152,20 @@ public class PatientBoImpl implements PatientBo {
 
     @Override
     public List<PatientDto> getFullEnrolledPatients() {
-        queryDao.getFullEnrolledPatients();
-        return null;
+        List<Patient> fullEnrolledPatients = queryDao.getFullEnrolledPatients();
+
+        List<PatientDto> patientDtos = new ArrayList<>();
+        for (Patient patient : fullEnrolledPatients) {
+            PatientDto patientDto = new PatientDto();
+            patientDto.setPatient_id(patient.getPatient_id());
+            patientDto.setName(patient.getName());
+            patientDto.setContact(patient.getContact());
+            patientDto.setEmail(patient.getEmail());
+            patientDto.setDate(patient.getDate());
+
+            patientDtos.add(patientDto);
+        }
+    return patientDtos;
     }
 
     @Override
@@ -163,5 +176,34 @@ public class PatientBoImpl implements PatientBo {
     @Override
     public List<FilterDto> filterByProgramId(String programId) {
         return queryDao.filterByProgramId(programId);
+    }
+
+    @Override
+    public PatientDto getPatinet(String patientId) {
+        Patient patient = patientDao.getPatient(patientId);
+        PatientDto patientDto = new PatientDto();
+        patientDto.setPatient_id(patient.getPatient_id());
+        patientDto.setName(patient.getName());
+        patientDto.setContact(patient.getContact());
+        patientDto.setEmail(patient.getEmail());
+        patientDto.setDate(patient.getDate());
+        patientDto.setMedical_history(patient.getMedical_history());
+
+        List<PatientProgramsDetailsDto> patientProgramsDetailsDtos = new ArrayList<>();
+        List<PatientProgramsDetails> patientProgramsDetails = patient.getPatientProgramsDetails();
+
+        for (PatientProgramsDetails programsDetails : patientProgramsDetails ){
+            PatientProgramsDetailsDto patientProgramsDetailsDto = new PatientProgramsDetailsDto();
+            patientProgramsDetailsDto.setPatient_id(programsDetails.getPatient().getPatient_id());
+            patientProgramsDetailsDto.setProgram_id(programsDetails.getTheraphyProgram().getTheraphy_pro_id());
+            patientProgramsDetailsDto.setPatient(programsDetails.getPatient());
+            patientProgramsDetailsDto.setTheraphyProgram(programsDetails.getTheraphyProgram());
+            patientProgramsDetailsDto.setStatus(programsDetails.getStatus());
+
+            patientProgramsDetailsDtos.add(patientProgramsDetailsDto);
+        }
+        patientDto.setPatientProgramsDetails(patientProgramsDetailsDtos);
+
+        return patientDto;
     }
 }
