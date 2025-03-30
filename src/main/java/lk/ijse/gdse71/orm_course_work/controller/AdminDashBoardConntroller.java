@@ -4,9 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -52,7 +54,15 @@ public class AdminDashBoardConntroller {
     private Button btnViewHistory;
 
     @FXML
-    void btnLogOutOnAction(ActionEvent event) {
+    void btnLogOutOnAction(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ancMain.getScene().getWindow();
+        stage.close();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LogIn.fxml"));
+        Parent root = loader.load();
+        Stage login = new Stage();
+        login.setScene(new Scene(root));
+        login.show();
 
     }
 

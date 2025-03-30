@@ -62,22 +62,22 @@ public class LogInController {
                     Stage stage = (Stage) ancMain.getScene().getWindow();
                     stage.close();
 
-                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/AddMinDashBorad.fxml"));
-                    Scene scene = new Scene(fxmlLoader.load());
-                    Stage stage1 = new Stage();
-                    stage1.setTitle("Admin Dashboard..!");
-                    stage1.setScene(scene);
-                    stage1.show();
+//                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/AddMinDashBorad.fxml"));
+//                    Scene scene = new Scene(fxmlLoader.load());
+//                    Stage stage1 = new Stage();
+//                    stage1.setTitle("Admin Dashboard..!");
+//                    stage1.setScene(scene);
+//                    stage1.show();
                 }else{
                     Stage stage = (Stage) ancMain.getScene().getWindow();
                     stage.close();
 
-                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/ReceptionnistDashBoard.fxml"));
-                    Scene scene = new Scene(fxmlLoader.load());
-                    Stage stage1 = new Stage();
-                    stage1.setTitle("Receptionist Dashboard..!");
-                    stage1.setScene(scene);
-                    stage1.show();
+//                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/ReceptionnistDashBoard.fxml"));
+//                    Scene scene = new Scene(fxmlLoader.load());
+//                    Stage stage1 = new Stage();
+//                    stage1.setTitle("Receptionist Dashboard..!");
+//                    stage1.setScene(scene);
+//                    stage1.show();
                 }
             }
         }

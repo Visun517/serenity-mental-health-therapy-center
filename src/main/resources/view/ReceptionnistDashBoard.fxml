@@ -1,16 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="639.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.orm_course_work.controller.ReceptionistController">
+<AnchorPane fx:id="ancMain" prefHeight="758.0" prefWidth="1210.0" stylesheets="@../stylesheets/adminDashBoardStyle.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.orm_course_work.controller.ReceptionistController">
    <children>
-      <Label layoutX="129.0" layoutY="97.0" prefHeight="168.0" prefWidth="342.0" text="Receptionist Dashboard">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
+      <!-- Sidebar -->
+      <VBox fx:id="ancSide" prefHeight="758.0" prefWidth="288.0" styleClass="sidebar">
+         <children>
+            <!-- Admin Dashboard Header -->
+            <StackPane styleClass="sidebar-header">
+               <children>
+                  <Label styleClass="sidebar-title" text="Admin Dashboard">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" top="20.0" />
+               </padding>
+            </StackPane>
+
+            <!-- Navigation Menu -->
+            <VBox spacing="10" styleClass="nav-menu">
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+
+               <Button fx:id="btnUserRoleMangment" onAction="#btnUserRoleMangmentOnAcion" styleClass="nav-button" text="User Profile managment">
+                  <graphic>
+                     <Rectangle height="20" styleClass="nav-indicator" width="5" />
+                  </graphic>
+               </Button>
+
+               <Button fx:id="btnPatientMangment" onAction="#btnPatientMangmentOnAction" styleClass="nav-button" text="Patient Management">
+                  <graphic>
+                     <Rectangle height="20" styleClass="nav-indicator" width="5" />
+                  </graphic>
+               </Button>
+
+               <Button fx:id="btnSessionScheduling" onAction="#btnSessionSchedulingOnAction" styleClass="nav-button" text="Therapy Session Scheduling">
+                  <graphic>
+                     <Rectangle height="20" styleClass="nav-indicator" width="5" />
+                  </graphic>
+               </Button>
+
+               <Button fx:id="btnPayment" onAction="#btnPaymentOnAction" styleClass="nav-button" text="Payment and Invoice">
+                  <graphic>
+                     <Rectangle height="20" styleClass="nav-indicator" width="5" />
+                  </graphic>
+               </Button>
+
+               <Button fx:id="btnReporting" onAction="#btnReportingOnAction" styleClass="nav-button" text="Reporting &amp; Analytics">
+                  <graphic>
+                     <Rectangle height="20" styleClass="nav-indicator" width="5" />
+                  </graphic>
+               </Button>
+
+               <Button fx:id="btnViewHistory" onAction="#btnViewHistoryOnAction" styleClass="nav-button" text="View Patient Therapy History">
+                  <graphic>
+                     <Rectangle height="20" styleClass="nav-indicator" width="5" />
+                  </graphic>
+               </Button>
+            </VBox>
+
+            <VBox VBox.vgrow="ALWAYS" />
+
+            <!-- Logout Button -->
+            <Button fx:id="btnLogOut" onAction="#btnLogOutOnAction" styleClass="logout-button" text="Log Out">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <effect>
+            <DropShadow offsetX="2.0" offsetY="0.0">
+               <color>
+                  <Color opacity="0.15" />
+               </color>
+            </DropShadow>
+         </effect>
+      </VBox>
+
+      <!-- Main Content Area -->
+      <AnchorPane fx:id="ancSecondMain" layoutX="288.0" prefHeight="758.0" prefWidth="922.0" styleClass="main-content">
+         <children>
+            <!-- Header Bar -->
+            <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="${ancSecondMain.width}" styleClass="header-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label styleClass="welcome-text" text="Welcome, Admin">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <HBox HBox.hgrow="ALWAYS" />
+                  <Label styleClass="date-text" text="Thursday, March 20, 2025">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+
+            <!-- Dashboard Content will be loaded here -->
+            <VBox fx:id="ancSecondMainChild" alignment="CENTER" layoutY="70.0" prefHeight="${ancSecondMain.height - 70}" prefWidth="${ancSecondMain.width}" styleClass="dashboard-content" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+               <children>
+                  <Label styleClass="content-title" text="Welcome to the Admin Dashboard">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="content-subtitle" text="Select an option from the menu to get started">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

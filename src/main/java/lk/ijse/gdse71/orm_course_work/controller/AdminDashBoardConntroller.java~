@@ -6,14 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ReceptionistController {
+public class AdminDashBoardConntroller {
 
     @FXML
     private AnchorPane ancMain;
@@ -43,6 +42,12 @@ public class ReceptionistController {
     private Button btnSessionScheduling;
 
     @FXML
+    private Button btnTheraphistsManagment;
+
+    @FXML
+    private Button btnTheraphyProgram;
+
+    @FXML
     private Button btnUserRoleMangment;
 
     @FXML
@@ -56,8 +61,11 @@ public class ReceptionistController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LogIn.fxml"));
         Parent root = loader.load();
         Stage login = new Stage();
+//        Image image = new Image(getClass().getResourceAsStream("/image/Screenshot 2024-11-12 232120.png"));
+//        login.getIcons().add(image);
         login.setScene(new Scene(root));
         login.show();
+
     }
 
     @FXML
@@ -82,11 +90,30 @@ public class ReceptionistController {
         ancSecondMainChild.getChildren().clear();
         Parent parent = FXMLLoader.load(getClass().getResource("/view/SessionSchedulingBoard.fxml"));
         ancSecondMainChild.getChildren().add(parent);
+
     }
 
     @FXML
-    void btnUserRoleMangmentOnAcion(ActionEvent event) {
+    void btnTheraphistsManagmentOnAction(ActionEvent event) throws IOException {
+        ancSecondMainChild.getChildren().clear();
+        Parent parent = FXMLLoader.load(getClass().getResource("/view/TheraphistsManagmentBoard.fxml"));
+        ancSecondMainChild.getChildren().add(parent);
 
+    }
+
+    @FXML
+    void btnTheraphyProgramOnAction(ActionEvent event) throws IOException {
+        ancSecondMainChild.getChildren().clear();
+        Parent parent = FXMLLoader.load(getClass().getResource("/view/TheraphyProgramManagment.fxml"));
+        ancSecondMainChild.getChildren().add(parent);
+
+    }
+
+    @FXML
+    void btnUserRoleMangmentOnAcion(ActionEvent event) throws IOException {
+        ancSecondMainChild.getChildren().clear();
+        Parent parent = FXMLLoader.load(getClass().getResource("/view/UserRoleManageBoard.fxml"));
+        ancSecondMainChild.getChildren().add(parent);
     }
 
     @FXML
