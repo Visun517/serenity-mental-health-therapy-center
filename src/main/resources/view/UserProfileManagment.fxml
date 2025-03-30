@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.orm_course_work.controller.UserProfileManagmentController">
+    <children>
+        <Label fx:id="lblHeader" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="15.0" prefHeight="32.0" prefWidth="580.0" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="User Profile Management">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+
+        <Label fx:id="lblUserName" layoutX="40.0" layoutY="80.0" prefHeight="25.0" prefWidth="150.0" style="-fx-text-fill: #333333;" text="Username:">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="txtName" layoutX="220.0" layoutY="80.0" prefHeight="30.0" prefWidth="340.0" style="-fx-background-color: white; -fx-border-color: #cccccc;" />
+
+        <Label fx:id="lblCurrentPass" layoutX="40.0" layoutY="130.0" prefHeight="25.0" prefWidth="150.0" style="-fx-text-fill: #333333;" text="Current Password:">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <PasswordField fx:id="txtCurrentPass" layoutX="220.0" layoutY="130.0" prefHeight="30.0" prefWidth="340.0" style="-fx-background-color: white; -fx-border-color: #cccccc;" />
+
+        <Label fx:id="lblNewPass" layoutX="40.0" layoutY="180.0" prefHeight="25.0" prefWidth="150.0" style="-fx-text-fill: #333333;" text="New Password:">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <PasswordField fx:id="txtNewPass" layoutX="220.0" layoutY="180.0" prefHeight="30.0" prefWidth="340.0" style="-fx-background-color: white; -fx-border-color: #cccccc;" />
+
+        <Label fx:id="lblConfirmPass" layoutX="40.0" layoutY="230.0" prefHeight="25.0" prefWidth="150.0" style="-fx-text-fill: #333333;" text="Confirm Password:">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <PasswordField fx:id="txtConfirmPass" layoutX="220.0" layoutY="227.0" prefHeight="30.0" prefWidth="340.0" style="-fx-background-color: white; -fx-border-color: #cccccc;" />
+
+        <CheckBox fx:id="chkShowPassword" layoutX="220.0" layoutY="270.0" onAction="#chkShowPasswordOnAction" text="Show Password" />
+
+        <Button fx:id="btnCancel" layoutX="220.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnCancelOnAction" prefHeight="32.0" prefWidth="120.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="Cancel" />
+        <Button fx:id="btnUpdate" layoutX="360.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="32.0" prefWidth="120.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Update" />
+    </children>
+</AnchorPane>

@@ -6,14 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import lk.ijse.gdse71.orm_course_work.HelloApplication;
 
 import java.io.IOException;
 
-public class ReceptionistController {
+public class ReceptionistDashBoardController {
 
     @FXML
     private AnchorPane ancMain;
@@ -85,7 +85,13 @@ public class ReceptionistController {
     }
 
     @FXML
-    void btnUserRoleMangmentOnAcion(ActionEvent event) {
+    void btnUserRoleMangmentOnAcion(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/UserProfileManagment.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage1 = new Stage();
+        stage1.setTitle("User profile management..!");
+        stage1.setScene(scene);
+        stage1.show();
 
     }
 
