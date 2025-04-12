@@ -3,6 +3,7 @@ package lk.ijse.gdse71.orm_course_work.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,11 +17,14 @@ import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
 import lk.ijse.gdse71.orm_course_work.dao.custom.UserDao;
 import lk.ijse.gdse71.orm_course_work.dto.UserDto;
 import lk.ijse.gdse71.orm_course_work.entity.User;
+import lk.ijse.gdse71.orm_course_work.userDetails.UserDetails;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class LogInController {
+public class LogInController  {
 
     @FXML
     private VBox ancMain;
@@ -45,6 +49,7 @@ public class LogInController {
     private final UserBo userBo = BoFactory.getInstance().getBo(BoFactory.BOType.USER);
     private final PasswordEncryptBo passwordEncryptBo = BoFactory.getInstance().getBo(BoFactory.BOType.PASSWORD);
 
+
     @FXML
     void btnLogInOnAction(ActionEvent event) throws IOException {
 
@@ -52,9 +57,15 @@ public class LogInController {
         String password = passFeild.getText();
 
 
+
+
         //data base ekene userta adala karana objetc eka ganna oni.
 
-        User user = userBo.getUser(userName);
+        UserDto user = userBo.getUser(userName);
+        UserDetails.getInstance().setLoggedInUser(user);
+        boolean isMatched = passwordEncryptBo.checkedPassword(password,user.getPassword());
+        System.out.println(password);
+        System.out.println(isMatched);
 
         if (user != null){
             if (passwordEncryptBo.checkedPassword(password,user.getPassword())){
@@ -68,9 +79,15 @@ public class LogInController {
                     stage1.setTitle("Admin Dashboard..!");
                     stage1.setScene(scene);
                     stage1.show();
-                }else{
+                }else if (user.getRole().equalsIgnoreCase("receptionist")){
                     Stage stage = (Stage) ancMain.getScene().getWindow();
                     stage.close();
+//
+//                    FXMLLoader fxmlLoader1 = new FXMLLoader(HelloApplication.class.getResource("/view/UserProfileManagment.fxml"));
+//                    Parent parent = fxmlLoader1.load();
+//                    UserProfileManagmentController userProfileManagmentController = fxmlLoader1.getController();
+//                    userProfileManagmentController.setUserDetails(user);
+
 
                     FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/ReceptionnistDashBoard.fxml"));
                     Scene scene = new Scene(fxmlLoader.load());
@@ -80,6 +97,8 @@ public class LogInController {
                     stage1.show();
                 }
             }
+        }else{
+            new Alert(Alert.AlertType.ERROR,"User not found ..!");
         }
     }
 
@@ -106,5 +125,6 @@ public class LogInController {
             parent.getChildren().set(fieldIndex, passFeild);
         }
     }
+
 
 }

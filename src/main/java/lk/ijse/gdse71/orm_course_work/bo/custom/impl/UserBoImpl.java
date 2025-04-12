@@ -17,8 +17,16 @@ public class UserBoImpl implements UserBo {
     private final PasswordEncryptBo passwordEncryptBo = BoFactory.getInstance().getBo(BoFactory.BOType.PASSWORD);
 
     @Override
-    public User getUser(String userName) {
-        return userDao.getUser(userName);
+    public UserDto getUser(String userName) {
+
+        User user = userDao.getUser(userName);
+        UserDto userDto = new UserDto();
+        userDto.setUser_id(user.getUser_id());
+        userDto.setPassword(user.getPassword());
+        userDto.setUsername(user.getUsername());
+        userDto.setRole(user.getRole());
+        return userDto;
+
     }
 
     @Override

@@ -110,7 +110,7 @@ public class UserRoleMangeController implements Initializable {
     userDto.setRole(comboBoxRole.getValue());
 
         try {
-
+            
                 boolean isSaved = userBo.save(userDto);
                 if (isSaved){
                     new Alert(Alert.AlertType.INFORMATION, "User is saved...!").show();
