@@ -127,6 +127,7 @@ public class PaymentManagementController implements Initializable {
         colProgramId.setCellValueFactory(new PropertyValueFactory<>("theraphyProgramId"));
         colSessionId.setCellValueFactory(new PropertyValueFactory<>("sessionId"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        btnReport.setDisable(true);
         refresh();
 
     }
@@ -226,6 +227,7 @@ public class PaymentManagementController implements Initializable {
 
     @FXML
     void tblPaymentOnCliked(MouseEvent event) {
+        btnReport.setDisable(false);
         PaymentTm paymentTm = tblPayment.getSelectionModel().getSelectedItem();
 
         lblPaymentIDShow.setText(paymentTm.getPayment_id());
