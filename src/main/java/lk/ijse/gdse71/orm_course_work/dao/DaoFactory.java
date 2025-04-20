@@ -16,7 +16,7 @@ public class DaoFactory {
         return daoFactory;
     }
     public enum DAOType{
-       USER,THERAPISTS,PROGRAM,THERAPISTS_PROGRAM,PATIENT,PATIENT_PROGRAM,QUERY,SESSIONS
+       USER,THERAPISTS,PROGRAM,THERAPISTS_PROGRAM,PATIENT,PATIENT_PROGRAM,QUERY,SESSIONS,PAYMENT
     }
 
     @SuppressWarnings("unchecked")
@@ -39,6 +39,8 @@ public class DaoFactory {
                 return (T) new QueryDaoImpl();
             case SESSIONS:
                 return (T) new SessionDaoImpl();
+            case PAYMENT:
+                return (T) new PaymentDaoImpl();
             default:
                 return null;
         }

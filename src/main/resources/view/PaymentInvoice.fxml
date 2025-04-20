@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.orm_course_work.controller.PaymentInvoiceController">
+   <children>
+      <!-- Header Section -->
+      <HBox alignment="CENTER_LEFT" layoutX="0.0" layoutY="0.0" prefHeight="80.0" prefWidth="700.0" style="-fx-background-color: #1565c0;">
+         <padding>
+            <Insets left="30.0" right="30.0" />
+         </padding>
+         <children>
+            <Label text="PAYMENT INVOICE" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_RIGHT" prefHeight="80.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="lblCurrentDate" text="April 20, 2025" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+
+      <!-- Main Content -->
+      <VBox layoutX="30.0" layoutY="100.0" prefHeight="480.0" prefWidth="640.0" spacing="20.0">
+         <children>
+            <!-- Invoice Info Section -->
+            <HBox prefWidth="640.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+               <padding>
+                  <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+               </padding>
+               <children>
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label style="-fx-text-fill: #1565c0; -fx-font-weight: bold;" text="INVOICE DETAILS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label fx:id="lblPaymentId" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Payment ID:" />
+                              <Label fx:id="lblPaymentIDShow" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #333333; -fx-font-weight: bold;" text="PMT-2025042001" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label fx:id="lblSessionId" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Session ID:" />
+                              <Label fx:id="lblSessionIdShow" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #333333; -fx-font-weight: bold;" text="SS-20250420-01" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_RIGHT" spacing="5.0">
+                     <children>
+                        <Label text="STATUS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblStatusShow" style="-fx-background-color: #E3F2FD; -fx-text-fill: #1565c0; -fx-padding: 5 15; -fx-font-weight: bold; -fx-background-radius: 20;" text="PENDING" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Patient & Program Info Section -->
+            <HBox prefWidth="640.0" spacing="20.0">
+               <children>
+                  <!-- Patient Info Card -->
+                  <VBox prefWidth="310.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+                     <padding>
+                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                     </padding>
+                     <children>
+                        <Label style="-fx-text-fill: #1565c0; -fx-font-weight: bold;" text="PATIENT INFORMATION">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Name:" />
+                              <Label fx:id="lblPatientNameShow" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #333333;" text="John Doe" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Patient ID:" />
+                              <Label fx:id="lblPatientIdShow" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #333333;" text="P100123" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Payment Type:" />
+                              <Label fx:id="lblPaymentTypeShow" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #333333;" text="Cash" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+
+                  <!-- Program Info Card -->
+                  <VBox prefWidth="310.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+                     <padding>
+                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                     </padding>
+                     <children>
+                        <Label style="-fx-text-fill: #1565c0; -fx-font-weight: bold;" text="PROGRAM DETAILS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Program:" />
+                              <Label fx:id="lblProgramNameShow" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #333333;" text="Cognitive Behavioral Therapy" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Duration:" />
+                              <Label fx:id="lblDurationShow" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #333333;" text="12 weeks" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Therapist:" />
+                              <Label fx:id="lblTherapistShow" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #333333;" text="Dr. Sarah Johnson" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Payment Details Card -->
+            <VBox prefWidth="640.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <Label style="-fx-text-fill: #1565c0; -fx-font-weight: bold;" text="PAYMENT DETAILS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+
+                  <GridPane hgap="20.0" vgap="15.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="150.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Total Fee:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Label fx:id="lblTotalFeeShow" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #333333;" text="LKR 80,000.00" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Due Payment:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <Label fx:id="lblDuePaymentShow" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #d32f2f; -fx-font-weight: bold;" text="LKR 40,000.00" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                        <Label fx:id="lblAmount" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Amount:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+                        <Label fx:id="lblDate" style="-fx-font-family: 'Arial'; -fx-font-size: 13; -fx-text-fill: #555555;" text="Payment Date:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="lblAmountShow" prefHeight="29.0" prefWidth="147.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="lblDateShow" layoutX="151.0" layoutY="71.0" prefHeight="29.0" prefWidth="147.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+
+                  <Line endX="600.0" startX="0.0" stroke="#e0e0e0">
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Line>
+
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Label style="-fx-font-family: 'Arial'; -fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #1565c0;" text="TOTAL DUE: " />
+                        <Label fx:id="lblTotalDueShow" style="-fx-font-family: 'Arial'; -fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #1565c0;" text="LKR 40,000.00" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

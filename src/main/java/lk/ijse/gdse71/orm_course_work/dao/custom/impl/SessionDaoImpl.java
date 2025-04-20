@@ -108,6 +108,14 @@ public class SessionDaoImpl implements SessionDao {
     }
 
     @Override
+    public TheraphySession getSession(String sessionId) {
+        Session session = factoryConfiguration.getSession();
+        TheraphySession theraphySession = session.get( TheraphySession.class, sessionId);
+        session.close();
+        return theraphySession;
+    }
+
+    @Override
     public boolean update(TheraphySession dto) throws SQLException {
         return false;
     }

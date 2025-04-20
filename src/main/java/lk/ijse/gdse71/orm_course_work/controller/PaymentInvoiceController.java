@@ -1,0 +1,132 @@
+package lk.ijse.gdse71.orm_course_work.controller;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
+import lk.ijse.gdse71.orm_course_work.bo.custom.*;
+import lk.ijse.gdse71.orm_course_work.dto.*;
+import lk.ijse.gdse71.orm_course_work.entity.PatinetProgramsDetailsIds;
+import lk.ijse.gdse71.orm_course_work.entity.Payment;
+import lombok.Setter;
+import org.hibernate.type.internal.ImmutableNamedBasicTypeImpl;
+
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+public class PaymentInvoiceController{
+
+    @FXML
+    private Label lblAmount;
+
+    @FXML
+    private Label lblAmountShow;
+
+    @FXML
+    private Label lblCurrentDate;
+
+    @FXML
+    private Label lblDate;
+
+    @FXML
+    private Label lblDateShow;
+
+    @FXML
+    private Label lblDuePaymentShow;
+
+    @FXML
+    private Label lblDurationShow;
+
+    @FXML
+    private Label lblPatientIdShow;
+
+    @FXML
+    private Label lblPatientNameShow;
+
+    @FXML
+    private Label lblPaymentIDShow;
+
+    @FXML
+    private Label lblPaymentId;
+
+    @FXML
+    private Label lblPaymentTypeShow;
+
+    @FXML
+    private Label lblProgramNameShow;
+
+    @FXML
+    private Label lblSessionId;
+
+    @FXML
+    private Label lblSessionIdShow;
+
+    @FXML
+    private Label lblStatusShow;
+
+    @FXML
+    private Label lblTherapistShow;
+
+    @FXML
+    private Label lblTotalDueShow;
+
+    @FXML
+    private Label lblTotalFeeShow;
+
+
+    private String paymentId;
+    private final PaymentBo paymentBo = BoFactory.getInstance().getBo(BoFactory.BOType.PAYMENT);
+    private final SessionBo sessionBo = BoFactory.getInstance().getBo(BoFactory.BOType.SESSION);
+    private final PatientBo patientBo = BoFactory.getInstance().getBo(BoFactory.BOType.PATIENT);
+    private final ProgramsBo programsBo = BoFactory.getInstance().getBo(BoFactory.BOType.PROGRAMS);
+    private final TheraphistsBo theraphistsBo = BoFactory.getInstance().getBo(BoFactory.BOType.THERAPIST);
+
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
+        loadInvoiceDetails(paymentId);
+    }
+
+    private void loadInvoiceDetails(String paymentId) {
+
+        try {
+            PaymentDto paymentDto = paymentBo.getPayment(paymentId);
+            SessionDto sessionDto = sessionBo.getSession(paymentDto.getSessionId());
+            PatientDto patinet = patientBo.getPatinet(sessionDto.getPatient_id());
+            ProgramDto program = programsBo.getProgram(sessionDto.getProgram_id());
+            TherapistDto theraphist = theraphistsBo.getTheraphist(sessionDto.getTherapist_id());
+            double patientProgramsDetailsDto = paymentBo.getDuePayment(new PatinetProgramsDetailsIds(sessionDto.getPatient_id(), sessionDto.getProgram_id()));
+
+
+            lblPaymentIDShow.setText(paymentDto.getPayment_id());
+            lblStatusShow.setText(paymentDto.getStatus());
+            
+
+            lblSessionIdShow.setText(sessionDto.getSession_id());
+
+            lblPatientNameShow.setText(patinet.getName());
+            lblPatientIdShow.setText(patinet.getPatient_id());
+            lblPaymentTypeShow.setText(paymentDto.getStatus());
+
+            lblProgramNameShow.setText(program.getName());
+            lblDurationShow.setText(program.getDuration());
+            lblTherapistShow.setText(theraphist.getName());
+
+            lblTotalFeeShow.setText(String.valueOf(program.getFee()));
+            lblDuePaymentShow.setText(String.valueOf(patientProgramsDetailsDto));
+            lblAmountShow.setText(String.valueOf(paymentDto.getAmount()));
+            lblDateShow.setText(String.valueOf(paymentDto.getDate()));
+            lblTotalDueShow.setText(String.valueOf(patientProgramsDetailsDto));
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+    }
+
+
+}

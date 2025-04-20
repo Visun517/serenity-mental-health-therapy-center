@@ -74,7 +74,10 @@ public class AdminDashBoardConntroller {
     }
 
     @FXML
-    void btnPaymentOnAction(ActionEvent event) {
+    void btnPaymentOnAction(ActionEvent event) throws IOException {
+        ancSecondMainChild.getChildren().clear();
+        Parent parent = FXMLLoader.load(getClass().getResource("/view/PaymentManagementBoard.fxml"));
+        ancSecondMainChild.getChildren().add(parent);
 
     }
 

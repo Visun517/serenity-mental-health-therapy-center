@@ -89,8 +89,10 @@ public class PatientBoImpl implements PatientBo {
             PatientProgramsDetails patientProgramsDetails = new PatientProgramsDetails();
             patientProgramsDetails.setStatus(status);
 
+
             TheraphyProgram theraphyProgram = progrmasDao.getNameFromProgram(name);
             patientProgramsDetails.setTheraphyProgram(theraphyProgram);
+            patientProgramsDetails.setProgramAmount(theraphyProgram.getFee() );
 
             PatinetProgramsDetailsIds patinetProgramsDetailsIds = new PatinetProgramsDetailsIds();
             patinetProgramsDetailsIds.setPatient_id(patientDto.getPatient_id());

@@ -19,4 +19,5 @@ public interface TheraphistsBo extends SuperBo {
      boolean update(TherapistDto therapistDto ,List<String> programNames) throws SQLException;
      List<TheraphyProgram> getAssigningPrograms(String therapistId) throws SQLException;
      List<TherapistDto> getAvailableTherapist(String programId, Time time, Date date);
+    TherapistDto getTheraphist(String therapistId);
 }

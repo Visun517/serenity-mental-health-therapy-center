@@ -1,7 +1,9 @@
 package lk.ijse.gdse71.orm_course_work.bo.custom;
 
 import lk.ijse.gdse71.orm_course_work.bo.SuperBo;
+import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
 import lk.ijse.gdse71.orm_course_work.dto.SessionDto;
+import lk.ijse.gdse71.orm_course_work.entity.TheraphySession;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,4 +15,5 @@ public interface SessionBo extends SuperBo {
     boolean cancel(SessionDto sessionDto)throws SQLException;
     boolean reschedule(SessionDto sessionDto) throws SQLException;
     List<SessionDto> getTherapistSchedule(String therapistId);
+    SessionDto getSession(String sessionId) throws SQLException;
 }

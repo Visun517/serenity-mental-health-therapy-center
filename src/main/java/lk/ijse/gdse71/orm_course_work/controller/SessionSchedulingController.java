@@ -243,9 +243,10 @@ public class SessionSchedulingController implements Initializable {
             getPrograms();
             getAll();
 
+
+
             cmbPatientIds.setValue("Select patient");
             cmbStatus.setValue("Select status");
-            cmbThearapistId.setValue("Select Therapist");
             lblProName.setText("");
 
         } catch (SQLException e) {
@@ -331,6 +332,8 @@ public class SessionSchedulingController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Row have no data..!").show();
         }
 
+    }
+    public void setCmbTheraphists(){
 
     }
 }

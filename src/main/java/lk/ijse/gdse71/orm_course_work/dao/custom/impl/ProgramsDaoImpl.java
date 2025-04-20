@@ -151,4 +151,12 @@ public class ProgramsDaoImpl implements ProgrmasDao {
         session.close();
         return theraphyProgram;
     }
+
+    @Override
+    public TheraphyProgram getProgram(String programId) {
+        Session session = factoryConfiguration.getSession();
+        TheraphyProgram theraphyProgram = session.get(TheraphyProgram.class, programId);
+        session.close();
+        return theraphyProgram;
+    }
 }

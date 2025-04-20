@@ -6,7 +6,9 @@ import lk.ijse.gdse71.orm_course_work.dao.custom.PatientDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.ProgrmasDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.SessionDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.TheraphistsDao;
+import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
 import lk.ijse.gdse71.orm_course_work.dto.SessionDto;
+import lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphySession;
 import org.hibernate.Session;
 
@@ -113,5 +115,20 @@ public class SessionBoImpl implements SessionBo {
             sessionDtos.add(sessionDto);
         }
        return sessionDtos;
+    }
+
+    @Override
+    public SessionDto getSession(String sessionId) throws SQLException {
+        TheraphySession theraphySession = sessionDao.getSession(sessionId);
+        SessionDto sessionDto = new SessionDto();
+        sessionDto.setSession_id(theraphySession.getSession_id());
+        sessionDto.setProgram_id(theraphySession.getTheraphyProgram().getTheraphy_pro_id());
+        sessionDto.setPatient_id(theraphySession.getPatient().getPatient_id());
+        sessionDto.setDate(theraphySession.getDate());
+        sessionDto.setTime(theraphySession.getTime());
+        sessionDto.setStatus(theraphySession.getStatus());
+        sessionDto.setTherapist_id(theraphySession.getTheraphist().getTheraphists_id());
+        return sessionDto;
+
     }
 }

@@ -27,4 +27,6 @@ public class PatientProgramsDetails {
     private TheraphyProgram theraphyProgram;
 
     private String status;
+
+    private double ProgramAmount;
 }

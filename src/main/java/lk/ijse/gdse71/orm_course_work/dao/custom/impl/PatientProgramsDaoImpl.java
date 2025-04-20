@@ -12,6 +12,7 @@ import java.util.List;
 
 public class PatientProgramsDaoImpl implements PatientProgrmasDao {
     private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
+
     @Override
     public String getNextId() throws SQLException {
         return "";
@@ -55,8 +56,50 @@ public class PatientProgramsDaoImpl implements PatientProgrmasDao {
     @Override
     public String getPatientStatus(PatinetProgramsDetailsIds patientId) {
         Session session = factoryConfiguration.getSession();
-        PatientProgramsDetails patientProgramsDetails = session.get(PatientProgramsDetails.class,patientId);
+        PatientProgramsDetails patientProgramsDetails = session.get(PatientProgramsDetails.class, patientId);
         session.close();
         return patientProgramsDetails.getStatus();
     }
+
+    @Override
+    public PatientProgramsDetails getDuePayment(PatinetProgramsDetailsIds patinetProgramsDetailsIds) {
+        Session session = factoryConfiguration.getSession();
+        PatientProgramsDetails patientProgramsDetails = session.get(PatientProgramsDetails.class, patinetProgramsDetailsIds);
+        return patientProgramsDetails;
+    }
+
+    @Override
+    public boolean reducePayment(PatinetProgramsDetailsIds patinetProgramsDetailsIds, double amount, Session session) {
+        try {
+            PatientProgramsDetails patientProgramsDetails = session.get(PatientProgramsDetails.class, patinetProgramsDetailsIds);
+            if (patientProgramsDetails != null) {
+                double tableAmount = patientProgramsDetails.getProgramAmount();
+                double tableSaveAmount = tableAmount - amount;
+
+                patientProgramsDetails.setProgramAmount(tableSaveAmount);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean addUpPayment(PatinetProgramsDetailsIds patinetProgramsDetailsIds, double amount, Session session) {
+        try {
+            PatientProgramsDetails patientProgramsDetails = session.get(PatientProgramsDetails.class, patinetProgramsDetailsIds);
+            if (patientProgramsDetails != null) {
+                double tableAmount = patientProgramsDetails.getProgramAmount();
+                double tableSaveAmount = tableAmount + amount;
+
+                patientProgramsDetails.setProgramAmount(tableSaveAmount);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
+

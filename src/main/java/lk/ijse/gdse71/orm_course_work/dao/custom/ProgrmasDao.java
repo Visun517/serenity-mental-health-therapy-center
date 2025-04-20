@@ -11,4 +11,5 @@ public interface ProgrmasDao extends CrudDao<TheraphyProgram> {
     List<String> getAllPrograms() throws SQLException;
     TheraphyProgram getNameFromProgram(String programName) throws SQLException;
     TheraphyProgram getIdFromProgram(String programId) throws SQLException;
+    TheraphyProgram getProgram(String programId);
 }
