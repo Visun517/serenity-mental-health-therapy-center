@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #F5F6F5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.orm_course_work.controller.SessionStaticsReportsController">
+    <children>
+        <Label text="Therapy Session Statistics" style="-fx-font-family: 'Arial'; -fx-font-size: 20; -fx-text-fill: #333333;" layoutX="20.0" layoutY="20.0" />
+
+        <TableView fx:id="tblSessionStats" layoutX="20.0" layoutY="60.0" prefHeight="200.0" prefWidth="760.0">
+            <columns>
+                <TableColumn fx:id="colProgramName" prefWidth="250.0" text="Program Name" />
+                <TableColumn fx:id="colTotalSessions" prefWidth="150.0" text="Total Sessions" />
+                <TableColumn fx:id="colCompletedSessions" prefWidth="150.0" text="Completed Sessions" />
+                <TableColumn fx:id="colPendingSessions" prefWidth="150.0" text="Pending Sessions" />
+            </columns>
+        </TableView>
+
+        <BarChart fx:id="chartSessionStats" layoutX="20.0" layoutY="280.0" prefHeight="200.0" prefWidth="760.0">
+            <xAxis>
+                <CategoryAxis label="Program" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Count" />
+            </yAxis>
+        </BarChart>
+    </children>
+</AnchorPane>

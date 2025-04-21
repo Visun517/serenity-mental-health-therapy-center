@@ -3,6 +3,8 @@ package lk.ijse.gdse71.orm_course_work.dao.custom.impl;
 import lk.ijse.gdse71.orm_course_work.config.FactoryConfiguration;
 import lk.ijse.gdse71.orm_course_work.dao.custom.QueryDao;
 import lk.ijse.gdse71.orm_course_work.dto.FilterDto;
+import lk.ijse.gdse71.orm_course_work.dto.SessionStaticsDto;
+import lk.ijse.gdse71.orm_course_work.dto.TherapistReportDto;
 import lk.ijse.gdse71.orm_course_work.entity.Patient;
 import lk.ijse.gdse71.orm_course_work.entity.Theraphist;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphySession;
@@ -131,6 +133,39 @@ public class QueryDaoImpl implements QueryDao {
 
         }
 
+    }
+
+    @Override
+    public List<TherapistReportDto> getTherapistPerformance() {
+        Session session = factoryConfiguration.getSession();
+        try {
+            String hql = "SELECT new lk.ijse.gdse71.orm_course_work.dto.TherapistReportDto(t.theraphists_id, t.name, COUNT(s), " +
+                    "(SUM(CASE WHEN s.status = 'COMPLETED' THEN 1 ELSE 0 END) * 100.0 / COUNT(s)), " +
+                    "COUNT(s)) " +
+                    "FROM Theraphist t LEFT JOIN t.theraphySessions s GROUP BY t.theraphists_id, t.name";
+
+            Query query = session.createQuery(hql);
+            return query.list();
+
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public List<SessionStaticsDto> getSessionStatistics() {
+        Session session = factoryConfiguration.getSession();
+        try {
+            String hql = "SELECT new lk.ijse.gdse71.orm_course_work.dto.SessionStaticsDto(p.name, COUNT(s), " +
+                    "SUM(CASE WHEN s.status = 'COMPLETED' THEN 1 ELSE 0 END), " +
+                    "SUM(CASE WHEN s.status = 'PENDING' THEN 1 ELSE 0 END)) " +
+                    "FROM TheraphyProgram p JOIN p.theraphySessions s GROUP BY p.name";
+
+            Query query = session.createQuery(hql);
+            return query.list();
+        } finally {
+            session.close();
+        }
     }
 
     @Override

@@ -140,7 +140,6 @@ public class TheraphistsBoImpl implements TheraphistsBo {
     @Override
     public List<TherapistReportDto> getTherapistPerformance() {
         List<TherapistReportDto> therapistReportDtos = queryDao.getTherapistPerformance();
-        return therapistReportDtos;
     }
 
 }

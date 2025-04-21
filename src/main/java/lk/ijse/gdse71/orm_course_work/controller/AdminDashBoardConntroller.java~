@@ -82,11 +82,7 @@ public class AdminDashBoardConntroller {
     }
 
     @FXML
-    void btnReportingOnAction(ActionEvent event) throws IOException {
-        ancSecondMainChild.getChildren().clear();
-        Parent parent = FXMLLoader.load(getClass().getResource("/view/TheraphistReport.fxml"));
-        ancSecondMainChild.getChildren().add(parent);
-
+    void btnReportingOnAction(ActionEvent event) {
 
     }
 

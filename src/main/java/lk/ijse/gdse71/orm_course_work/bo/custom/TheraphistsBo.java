@@ -2,6 +2,7 @@ package lk.ijse.gdse71.orm_course_work.bo.custom;
 
 import lk.ijse.gdse71.orm_course_work.bo.SuperBo;
 import lk.ijse.gdse71.orm_course_work.dto.TherapistDto;
+import lk.ijse.gdse71.orm_course_work.dto.TherapistReportDto;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -20,4 +21,5 @@ public interface TheraphistsBo extends SuperBo {
      List<TheraphyProgram> getAssigningPrograms(String therapistId) throws SQLException;
      List<TherapistDto> getAvailableTherapist(String programId, Time time, Date date);
     TherapistDto getTheraphist(String therapistId);
+    List<TherapistReportDto> getTherapistPerformance();
 }

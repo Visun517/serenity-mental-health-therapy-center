@@ -2,10 +2,12 @@ package lk.ijse.gdse71.orm_course_work.bo.custom.impl;
 
 import lk.ijse.gdse71.orm_course_work.bo.custom.SessionBo;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
-import lk.ijse.gdse71.orm_course_work.dao.custom.*;
+import lk.ijse.gdse71.orm_course_work.dao.custom.PatientDao;
+import lk.ijse.gdse71.orm_course_work.dao.custom.ProgrmasDao;
+import lk.ijse.gdse71.orm_course_work.dao.custom.SessionDao;
+import lk.ijse.gdse71.orm_course_work.dao.custom.TheraphistsDao;
 import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
 import lk.ijse.gdse71.orm_course_work.dto.SessionDto;
-import lk.ijse.gdse71.orm_course_work.dto.SessionStaticsDto;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphySession;
 import org.hibernate.Session;
@@ -19,8 +21,6 @@ public class SessionBoImpl implements SessionBo {
     private final PatientDao patientDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.PATIENT);
     private final ProgrmasDao progrmasDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.PROGRAM);
     private final TheraphistsDao theraphistsDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.THERAPISTS);
-    private final QueryDao queryDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.QUERY);
-
     @Override
     public String getNextId() throws SQLException {
         String id = sessionDao.getNextId();
@@ -130,11 +130,5 @@ public class SessionBoImpl implements SessionBo {
         sessionDto.setTherapist_id(theraphySession.getTheraphist().getTheraphists_id());
         return sessionDto;
 
-    }
-
-    @Override
-    public List<SessionStaticsDto> getSessionStatistics() {
-        List<SessionStaticsDto> sessionStaticsDtos = queryDao.getSessionStatistics();
-        return sessionStaticsDtos;
     }
 }

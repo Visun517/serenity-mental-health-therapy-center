@@ -14,4 +14,5 @@
     exports lk.ijse.gdse71.orm_course_work.controller;
     opens lk.ijse.gdse71.orm_course_work.controller to javafx.fxml;
     opens lk.ijse.gdse71.orm_course_work.dto.tm to javafx.base;
+        exports lk.ijse.gdse71.orm_course_work.dto;
     }
