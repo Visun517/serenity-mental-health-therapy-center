@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SessionBoImpl implements SessionBo {
+
     private final SessionDao sessionDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.SESSIONS);
     private final PatientDao patientDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.PATIENT);
     private final ProgrmasDao progrmasDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.PROGRAM);
@@ -136,5 +137,13 @@ public class SessionBoImpl implements SessionBo {
     public List<SessionStaticsDto> getSessionStatistics() {
         List<SessionStaticsDto> sessionStaticsDtos = queryDao.getSessionStatistics();
         return sessionStaticsDtos;
+    }
+
+    @Override
+    public String getPatinetProgramSession(String patientId, String programId) throws SQLException {
+        String sessionId = sessionDao.getSessionId(patientId, programId);
+        System.out.println(sessionId);
+        return sessionId;
+
     }
 }

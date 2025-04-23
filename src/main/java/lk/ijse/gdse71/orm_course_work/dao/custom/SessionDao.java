@@ -11,4 +11,5 @@ public interface SessionDao extends CrudDao<TheraphySession> {
     boolean reschedule(TheraphySession theraphySession);
     List<TheraphySession> getTherapistSchedule(String therapistId);
     TheraphySession getSession(String sessionId);
+    String getSessionId(String patientId, String programId);
 }

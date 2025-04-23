@@ -18,4 +18,5 @@ public class PatientProgramsDetailsDto {
     private Patient patient;
     private TheraphyProgram theraphyProgram;
     private String status;
+    private double amount;
 }

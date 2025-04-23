@@ -116,6 +116,17 @@ public class SessionDaoImpl implements SessionDao {
     }
 
     @Override
+    public String getSessionId(String patientId, String programId) {
+        Session session = factoryConfiguration.getSession();
+        String hql = "SELECT s.session_id FROM TheraphySession s WHERE s.patient.patient_id = :patientId AND s.theraphyProgram.theraphy_pro_id = :programId";
+        Query query = session.createQuery(hql);
+        query.setParameter("patientId", patientId);
+        query.setParameter("programId", programId);
+        List<String> result = query.list();
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+    @Override
     public boolean update(TheraphySession dto) throws SQLException {
         return false;
     }

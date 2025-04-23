@@ -122,7 +122,10 @@ public class AdminDashBoardConntroller {
     }
 
     @FXML
-    void btnViewHistoryOnAction(ActionEvent event) {
+    void btnViewHistoryOnAction(ActionEvent event) throws IOException {
+        ancSecondMainChild.getChildren().clear();
+        Parent parent = FXMLLoader.load(getClass().getResource("/view/TheraphySessionHistory.fxml"));
+        ancSecondMainChild.getChildren().add(parent);
 
     }
 

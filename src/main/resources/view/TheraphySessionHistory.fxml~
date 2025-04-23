@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #F5F6F5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.orm_course_work.controller.theraphySessionHistoryController">
+    <children>
+        <Label layoutX="20.0" layoutY="20.0" style="-fx-font-family: 'Arial'; -fx-font-size: 20; -fx-text-fill: #333333;" text="Patient Therapy History" />
+
+        <!-- Search Bar -->
+        <Label layoutX="20.0" layoutY="60.0" style="-fx-font-family: 'Arial'; -fx-font-size: 14; -fx-text-fill: #333333;" text="Patient ID:" />
+        <Button fx:id="btnSearch" layoutX="322.0" layoutY="55.0" onAction="#searchPatientHistory" style="-fx-background-color: #007BFF; -fx-text-fill: white; -fx-font-family: 'Arial'; -fx-font-size: 14;" text="Search" />
+
+        <!-- Therapy History Table -->
+        <TableView fx:id="tblTherapyHistory" layoutX="20.0" layoutY="100.0" prefHeight="450.0" prefWidth="760.0">
+            <columns>
+                <TableColumn fx:id="colPatientId" prefWidth="100.0" text="Patient ID" />
+                <TableColumn fx:id="colProgramId" prefWidth="100.0" text="Program ID" />
+                <TableColumn fx:id="colSessionId" prefWidth="100.0" text="Session ID" />
+                <TableColumn fx:id="colTotalFee" prefWidth="100.0" text="Total Fee" />
+                <TableColumn fx:id="colPaidAmount" prefWidth="100.0" text="Paid Amount" />
+                <TableColumn fx:id="colPendingAmount" prefWidth="117.5999755859375" text="Pending Amount" />
+                <TableColumn fx:id="colStatus" prefWidth="142.40008544921875" text="Status" />
+            </columns>
+        </TableView>
+      <ComboBox fx:id="cmbPatinetIds" layoutX="110.0" layoutY="56.0" prefHeight="26.0" prefWidth="194.0" />
+    </children>
+</AnchorPane>

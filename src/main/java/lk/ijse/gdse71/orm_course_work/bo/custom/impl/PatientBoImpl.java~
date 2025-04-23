@@ -219,7 +219,7 @@ public class PatientBoImpl implements PatientBo {
                 PatientProgramsDetailsDto patientProgramsDetailsDto = new PatientProgramsDetailsDto();
                 patientProgramsDetailsDto.setStatus(programsDetails.getStatus());
                 patientProgramsDetailsDto.setProgram_id(programsDetails.getTheraphyProgram().getTheraphy_pro_id());
-                patientProgramsDetailsDto.setPatient_id(programsDetails.getPatient().getPatient_id());
+                patientProgramsDetailsDto.setPatient(programsDetails.getPatient());
                 patientProgramsDetailsDto.setAmount(programsDetails.getProgramAmount());
 
                 patientProgramsDetailsDtos.add(patientProgramsDetailsDto);

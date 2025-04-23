@@ -18,4 +18,5 @@ public interface SessionBo extends SuperBo {
     List<SessionDto> getTherapistSchedule(String therapistId);
     SessionDto getSession(String sessionId) throws SQLException;
     List<SessionStaticsDto> getSessionStatistics();
+    String getPatinetProgramSession(String patientId, String programId) throws SQLException;
 }
