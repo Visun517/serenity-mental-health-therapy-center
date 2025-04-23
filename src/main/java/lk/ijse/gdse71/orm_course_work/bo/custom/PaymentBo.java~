@@ -19,5 +19,4 @@ public interface PaymentBo extends SuperBo {
      PaymentDto getPayment(String paymentId);
      List<FinancialReportDto> getDailyRevenue(String currentDate);
      double getReceivedPayment() throws SQLException;
-     double getPendingPayment() throws SQLException;
 }

@@ -30,6 +30,7 @@ public class Payment {
     private TheraphySession session;
 
     private String status;
+    private String payment_type;
 
 
 }

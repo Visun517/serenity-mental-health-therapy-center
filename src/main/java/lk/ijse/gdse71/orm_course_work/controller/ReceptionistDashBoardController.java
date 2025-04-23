@@ -76,8 +76,10 @@ public class ReceptionistDashBoardController {
     }
 
     @FXML
-    void btnReportingOnAction(ActionEvent event) {
-
+    void btnReportingOnAction(ActionEvent event) throws IOException {
+        ancSecondMainChild.getChildren().clear();
+        Parent parent = FXMLLoader.load(getClass().getResource("/view/FinancialReportGenerate.fxml"));
+        ancSecondMainChild.getChildren().add(parent);
     }
 
     @FXML

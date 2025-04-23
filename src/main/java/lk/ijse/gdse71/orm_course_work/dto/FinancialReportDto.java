@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.orm_course_work.dto.tm;
+package lk.ijse.gdse71.orm_course_work.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,13 +11,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PaymentTm {
+public class FinancialReportDto {
     private String payment_id;
-    private Date date;
+    private String patinet_id;
     private double amount;
-    private String patientId;
-    private String theraphyProgramId;
-    private String sessionId;
     private String status;
-    private String paymentType;
+    private Date date;
 }

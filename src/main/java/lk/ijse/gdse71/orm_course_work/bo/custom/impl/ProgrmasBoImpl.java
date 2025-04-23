@@ -2,9 +2,11 @@ package lk.ijse.gdse71.orm_course_work.bo.custom.impl;
 
 import lk.ijse.gdse71.orm_course_work.bo.custom.ProgramsBo;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
+import lk.ijse.gdse71.orm_course_work.dao.custom.PatientProgrmasDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.ProgrmasDao;
 import lk.ijse.gdse71.orm_course_work.dto.FilterDto;
 import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
+import lk.ijse.gdse71.orm_course_work.entity.PatientProgramsDetails;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram;
 
 import java.sql.SQLException;
@@ -13,6 +15,7 @@ import java.util.List;
 
 public class ProgrmasBoImpl implements ProgramsBo {
     private final ProgrmasDao progrmasDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.PROGRAM);
+    private final PatientProgrmasDao patientProgrmasDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.PATIENT_PROGRAM);
 
     @Override
     public List<String> getAllPrograms() throws SQLException {
@@ -96,6 +99,18 @@ public class ProgrmasBoImpl implements ProgramsBo {
         programDto.setDuration(program.getDuration());
         programDto.setFee(program.getFee());
         return programDto;
+    }
+
+    @Override
+    public double getTotalIncome() throws SQLException {
+        List<PatientProgramsDetails> all = patientProgrmasDao.getAll();
+        System.out.println(all.isEmpty());
+        double payment = 0;
+        for (PatientProgramsDetails patientProgramsDetails : all) {
+             TheraphyProgram theraphyProgram = progrmasDao.getProgram(patientProgramsDetails.getTheraphyProgram().getTheraphy_pro_id());
+             payment += theraphyProgram.getFee();
+        }
+        return payment;
     }
 
 }

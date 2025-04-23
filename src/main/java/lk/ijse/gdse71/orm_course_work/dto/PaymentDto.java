@@ -23,4 +23,5 @@ public class PaymentDto {
     private String theraphyProgramId;
     private String sessionId;
     private String status;
+    private String paymentType;
 }

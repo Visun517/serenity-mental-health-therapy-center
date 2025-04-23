@@ -295,7 +295,6 @@ public class PaymentManagementController implements Initializable {
         cmbPayemntType.setValue("");
         lblProgramNameShow.setText("");
         lblDuePaymentShow.setText("");
-        datePicker.setValue(LocalDate.now());
         setPaymentTypes();
         try {
             lblPaymentIDShow.setText(paymentBo.getNextId());

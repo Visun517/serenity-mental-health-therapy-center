@@ -76,6 +76,8 @@
                   <Label fx:id="lblStatus" styleClass="field-label" text="Status" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                   <ComboBox fx:id="cmbStatus" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label fx:id="lblDuePaymentShow" prefHeight="30.0" prefWidth="108.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <Label fx:id="lblPayemntType" layoutX="10.0" layoutY="133.0" styleClass="field-label" text="Payment type" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="cmbPayemntType" layoutX="130.0" layoutY="116.0" prefHeight="38.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>
@@ -94,13 +96,14 @@
             </Label>
             <TableView fx:id="tblPayment" onMouseClicked="#tblPaymentOnCliked" prefHeight="305.0" prefWidth="843.4">
                <columns>
-                  <TableColumn fx:id="colPaymentId" prefWidth="120.0" text="Payment ID" />
-                  <TableColumn fx:id="colAmount" prefWidth="120.0" text="Amount" />
-                  <TableColumn fx:id="colDate" prefWidth="120.0" text="Date" />
-                  <TableColumn fx:id="colStatus" prefWidth="120.0" text="Status" />
-                  <TableColumn fx:id="colPatientId" prefWidth="120.0" text="Patient ID" />
-                  <TableColumn fx:id="colSessionId" prefWidth="120.0" text="Session ID" />
-                  <TableColumn fx:id="colProgramId" prefWidth="120.0" text="Program ID" />
+                  <TableColumn fx:id="colPaymentId" prefWidth="92.80001831054688" text="Payment ID" />
+                  <TableColumn fx:id="colAmount" prefWidth="111.19998168945312" text="Amount" />
+                  <TableColumn fx:id="colDate" prefWidth="117.5999755859375" text="Date" />
+                  <TableColumn fx:id="colStatus" prefWidth="123.20001220703125" text="Status" />
+                  <TableColumn fx:id="colPatientId" prefWidth="87.199951171875" text="Patient ID" />
+                  <TableColumn fx:id="colSessionId" prefWidth="96.79998779296875" text="Session ID" />
+                  <TableColumn fx:id="colProgramId" minWidth="0.0" prefWidth="101.59991455078125" text="Program ID" />
+                  <TableColumn fx:id="colPayemntType" minWidth="0.0" prefWidth="108.0001220703125" text="Payment type" />
                </columns>
             </TableView>
          </children>

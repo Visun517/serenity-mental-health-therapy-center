@@ -3,6 +3,7 @@ package lk.ijse.gdse71.orm_course_work.dao.custom.impl;
 import lk.ijse.gdse71.orm_course_work.config.FactoryConfiguration;
 import lk.ijse.gdse71.orm_course_work.dao.custom.QueryDao;
 import lk.ijse.gdse71.orm_course_work.dto.FilterDto;
+import lk.ijse.gdse71.orm_course_work.dto.FinancialReportDto;
 import lk.ijse.gdse71.orm_course_work.dto.SessionStaticsDto;
 import lk.ijse.gdse71.orm_course_work.dto.TherapistReportDto;
 import lk.ijse.gdse71.orm_course_work.entity.Patient;
@@ -13,6 +14,9 @@ import org.hibernate.query.Query;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,6 +167,31 @@ public class QueryDaoImpl implements QueryDao {
 
             Query query = session.createQuery(hql);
             return query.list();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public List<FinancialReportDto> getDailyRevenue(String currentDate) {
+        java.util.Date date;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            date = dateFormat.parse(currentDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            date = new java.util.Date();
+        }
+
+        Session session = factoryConfiguration.getSession();
+        try {
+            String hql = "SELECT new lk.ijse.gdse71.orm_course_work.dto.FinancialReportDto(p.payment_id, p.patient.patient_id, p.amount, p.status, p.date) " +
+                    "FROM Payment p WHERE FUNCTION('DATE', p.date) = :date AND p.status = 'COMPLETED'";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("date",date );
+            List<FinancialReportDto> financialReportDtos = query.list();
+            return financialReportDtos ;
         } finally {
             session.close();
         }

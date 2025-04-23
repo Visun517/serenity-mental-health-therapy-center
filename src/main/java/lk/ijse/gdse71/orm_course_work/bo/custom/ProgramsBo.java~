@@ -16,5 +16,4 @@ public interface ProgramsBo extends SuperBo {
      boolean delete(String id) throws SQLException;
      String getProgramName(String selectedItem);
      ProgramDto getProgram(String programId);
-    double getTotalIncome() throws SQLException;
 }

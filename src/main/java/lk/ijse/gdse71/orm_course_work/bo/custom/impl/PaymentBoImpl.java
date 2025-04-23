@@ -5,7 +5,9 @@ import lk.ijse.gdse71.orm_course_work.config.FactoryConfiguration;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
 import lk.ijse.gdse71.orm_course_work.dao.custom.PatientProgrmasDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.PaymentDao;
+import lk.ijse.gdse71.orm_course_work.dao.custom.QueryDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.SessionDao;
+import lk.ijse.gdse71.orm_course_work.dto.FinancialReportDto;
 import lk.ijse.gdse71.orm_course_work.dto.PaymentDto;
 import lk.ijse.gdse71.orm_course_work.entity.PatientProgramsDetails;
 import lk.ijse.gdse71.orm_course_work.entity.PatinetProgramsDetailsIds;
@@ -15,14 +17,17 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentBoImpl implements PaymentBo {
+
     private final PaymentDao paymentDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.PAYMENT);
     private final PatientProgrmasDao progrmasDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.PATIENT_PROGRAM);
     private final SessionDao sessionDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.SESSIONS);
     private final PatientProgrmasDao patientProgrmasDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.PATIENT_PROGRAM);
+    private final QueryDao queryDao = DaoFactory.getInstance().getDAO(DaoFactory.DAOType.QUERY);
 
     @Override
     public String getNextId() throws SQLException {
@@ -52,6 +57,7 @@ public class PaymentBoImpl implements PaymentBo {
             paymentDto.setPatientId(payment.getPatient().getPatient_id());
             paymentDto.setSessionId(payment.getSession().getSession_id());
             paymentDto.setTheraphyProgramId(payment.getTheraphyProgram().getTheraphy_pro_id());
+            paymentDto.setPaymentType(payment.getPayment_type());
 
             paymentDtos.add(paymentDto);
         }
@@ -68,6 +74,7 @@ public class PaymentBoImpl implements PaymentBo {
         payment.setDate(dto.getDate());
         payment.setStatus(dto.getStatus());
         payment.setAmount(dto.getAmount());
+        payment.setPayment_type(dto.getPaymentType());
 
         TheraphySession theraphySession = sessionDao.getSession(dto.getSessionId());
         if (theraphySession != null) {
@@ -107,6 +114,7 @@ public class PaymentBoImpl implements PaymentBo {
         payment.setDate(dto.getDate());
         payment.setStatus(dto.getStatus());
         payment.setAmount(dto.getAmount());
+        payment.setPayment_type(dto.getPaymentType());
 
         TheraphySession theraphySession = sessionDao.getSession(dto.getSessionId());
         if (theraphySession != null) {
@@ -189,6 +197,33 @@ public class PaymentBoImpl implements PaymentBo {
         paymentDto.setSessionId(payment.getSession().getSession_id());
         paymentDto.setTheraphyProgramId(payment.getTheraphyProgram().getTheraphy_pro_id());
         return paymentDto;
+    }
+
+    @Override
+    public List<FinancialReportDto> getDailyRevenue(String currentDate) {
+        List<FinancialReportDto> financialReportDtos = queryDao.getDailyRevenue(currentDate);
+        return financialReportDtos;
+    }
+
+    @Override
+    public double getReceivedPayment() throws SQLException {
+        List<Payment> all = paymentDao.getAll();
+        double payment = 0;
+        for (Payment payment1 : all) {
+            payment += payment1.getAmount();
+        }
+        return payment;
+    }
+
+    @Override
+    public double getPendingPayment() throws SQLException {
+        List<PatientProgramsDetails> all = patientProgrmasDao.getAll();
+        double payment = 0;
+        for (PatientProgramsDetails patientProgramsDetails : all) {
+            payment += patientProgramsDetails.getProgramAmount();
+        }
+        return payment;
+
     }
 
 }

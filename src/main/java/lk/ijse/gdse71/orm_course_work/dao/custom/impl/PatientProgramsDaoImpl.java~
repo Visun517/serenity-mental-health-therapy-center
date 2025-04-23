@@ -2,14 +2,12 @@ package lk.ijse.gdse71.orm_course_work.dao.custom.impl;
 
 import lk.ijse.gdse71.orm_course_work.config.FactoryConfiguration;
 import lk.ijse.gdse71.orm_course_work.dao.custom.PatientProgrmasDao;
-import lk.ijse.gdse71.orm_course_work.entity.Patient;
 import lk.ijse.gdse71.orm_course_work.entity.PatientProgramsDetails;
 import lk.ijse.gdse71.orm_course_work.entity.PatinetProgramsDetailsIds;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PatientProgramsDaoImpl implements PatientProgrmasDao {
@@ -22,8 +20,7 @@ public class PatientProgramsDaoImpl implements PatientProgrmasDao {
 
     @Override
     public List<PatientProgramsDetails> getAll() throws SQLException {
-        Session session = factoryConfiguration.getSession();
-        return session.createQuery("from PatientProgramsDetails ", PatientProgramsDetails.class).list();
+        return List.of();
     }
 
     @Override
