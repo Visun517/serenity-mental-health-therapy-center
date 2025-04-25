@@ -398,6 +398,7 @@ public class SessionSchedulingController implements Initializable {
 //    }
 
     public void getAvailableTherapist(String programId, Time time, Date date) throws SQLException {
+        System.out.println("work");
         List<TherapistDto> availableTherapist = theraphistsBo.getAvailableTherapist(programId, time, date);
 
         if (availableTherapist.isEmpty()) {

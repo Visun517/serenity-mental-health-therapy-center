@@ -1,0 +1,7 @@
+package lk.ijse.gdse71.orm_course_work.bo.exception;
+
+public class AccountLockOutException extends LoginException{
+    public AccountLockOutException(String message) {
+        super(message);
+    }
+}

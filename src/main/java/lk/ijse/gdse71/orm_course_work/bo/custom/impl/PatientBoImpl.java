@@ -2,6 +2,7 @@ package lk.ijse.gdse71.orm_course_work.bo.custom.impl;
 
 import javafx.collections.ObservableList;
 import lk.ijse.gdse71.orm_course_work.bo.custom.PatientBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.RegistrationException;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
 import lk.ijse.gdse71.orm_course_work.dao.custom.PatientDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.PatientProgrmasDao;
@@ -74,7 +75,11 @@ public class PatientBoImpl implements PatientBo {
     }
 
     @Override
-    public boolean patinetSave(PatientDto patientDto, String status, ObservableList<String> programNames) throws SQLException {
+    public boolean patinetSave(PatientDto patientDto, String status, ObservableList<String> programNames) throws SQLException, RegistrationException {
+
+        if (patientDto.getPatient_id() == null && patientDto.getName() == null && patientDto.getContact() == null && patientDto.getDate() == null && patientDto.getMedical_history() == null && patientDto.getEmail() == null) {
+            throw new RegistrationException("missing fields");
+        }
         Patient patient = new Patient();
         patient.setPatient_id(patientDto.getPatient_id());
         patient.setName(patientDto.getName());
@@ -112,7 +117,10 @@ public class PatientBoImpl implements PatientBo {
     }
 
     @Override
-    public boolean update(PatientDto patientDto, String status, ObservableList<String> programNames) throws SQLException {
+    public boolean update(PatientDto patientDto, String status, ObservableList<String> programNames) throws SQLException, RegistrationException {
+        if (patientDto.getPatient_id() == null && patientDto.getName() == null && patientDto.getContact() == null && patientDto.getDate() == null && patientDto.getMedical_history() == null && patientDto.getEmail() == null) {
+            throw new RegistrationException("missing fields");
+        }
         Patient patient = new Patient();
         patient.setPatient_id(patientDto.getPatient_id());
         patient.setName(patientDto.getName());

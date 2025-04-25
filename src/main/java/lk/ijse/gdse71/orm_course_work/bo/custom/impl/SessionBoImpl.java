@@ -1,6 +1,7 @@
 package lk.ijse.gdse71.orm_course_work.bo.custom.impl;
 
 import lk.ijse.gdse71.orm_course_work.bo.custom.SessionBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.SchedulingConfiltException;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
 import lk.ijse.gdse71.orm_course_work.dao.custom.*;
 import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
@@ -56,7 +57,15 @@ public class SessionBoImpl implements SessionBo {
     }
 
     @Override
-    public boolean book(SessionDto sessionDto) throws SQLException {
+    public boolean book(SessionDto sessionDto) throws SQLException, SchedulingConfiltException {
+
+        if (sessionDto.getSession_id().isEmpty() && sessionDto.getPatient_id().isEmpty() && sessionDto.getProgram_id().isEmpty() && sessionDto.getTherapist_id().isEmpty() && sessionDto.getDate()== null && sessionDto.getTime()==null && sessionDto.getStatus().isEmpty()) {
+            throw new SchedulingConfiltException("missing fields");
+        }
+
+        if (sessionDao.getSession(sessionDto.getSession_id()) != null) {
+            throw new SchedulingConfiltException("session already exists");
+        }
         TheraphySession theraphySession = new TheraphySession();
         theraphySession.setSession_id(sessionDto.getSession_id());
         theraphySession.setPatient(patientDao.getPatient(sessionDto.getPatient_id()));
@@ -70,7 +79,15 @@ public class SessionBoImpl implements SessionBo {
     }
 
     @Override
-    public boolean cancel(SessionDto sessionDto) throws SQLException {
+    public boolean cancel(SessionDto sessionDto) throws SQLException, SchedulingConfiltException {
+        if (sessionDto.getSession_id().isEmpty() && sessionDto.getPatient_id().isEmpty() && sessionDto.getProgram_id().isEmpty() && sessionDto.getTherapist_id().isEmpty() && sessionDto.getDate()== null && sessionDto.getTime()==null && sessionDto.getStatus().isEmpty()) {
+            throw new SchedulingConfiltException("missing fields");
+        }
+
+        if (sessionDao.getSession(sessionDto.getSession_id()) != null) {
+            throw new SchedulingConfiltException("session already exists");
+        }
+
         TheraphySession theraphySession = new TheraphySession();
         theraphySession.setSession_id(sessionDto.getSession_id());
         theraphySession.setPatient(patientDao.getPatient(sessionDto.getPatient_id()));
@@ -85,7 +102,14 @@ public class SessionBoImpl implements SessionBo {
     }
 
     @Override
-    public boolean reschedule(SessionDto sessionDto) throws SQLException {
+    public boolean reschedule(SessionDto sessionDto) throws SQLException, SchedulingConfiltException {
+        if (sessionDto.getSession_id().isEmpty() && sessionDto.getPatient_id().isEmpty() && sessionDto.getProgram_id().isEmpty() && sessionDto.getTherapist_id().isEmpty() && sessionDto.getDate()== null && sessionDto.getTime()==null && sessionDto.getStatus().isEmpty()) {
+            throw new SchedulingConfiltException("missing fields");
+        }
+
+        if (sessionDao.getSession(sessionDto.getSession_id()) != null) {
+            throw new SchedulingConfiltException("session already exists");
+        }
         TheraphySession theraphySession = new TheraphySession();
         theraphySession.setSession_id(sessionDto.getSession_id());
         theraphySession.setPatient(patientDao.getPatient(sessionDto.getPatient_id()));

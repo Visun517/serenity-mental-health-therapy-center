@@ -1,0 +1,7 @@
+package lk.ijse.gdse71.orm_course_work.bo.exception;
+
+public class MissingFieldException extends RegistrationException{
+    public MissingFieldException(String message) {
+        super(message);
+    }
+}

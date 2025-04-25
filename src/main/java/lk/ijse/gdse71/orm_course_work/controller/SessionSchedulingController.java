@@ -13,6 +13,7 @@ import lk.ijse.gdse71.orm_course_work.bo.custom.PatientBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.ProgramsBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.SessionBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.TheraphistsBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.SchedulingConfiltException;
 import lk.ijse.gdse71.orm_course_work.dto.PatientDto;
 import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
 import lk.ijse.gdse71.orm_course_work.dto.SessionDto;
@@ -210,8 +211,8 @@ public class SessionSchedulingController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "User is not booked...!").show();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | SchedulingConfiltException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
@@ -305,9 +306,8 @@ public class SessionSchedulingController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "User is not rescheduled...!").show();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException | SchedulingConfiltException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();        }
     }
 
     @FXML
@@ -329,9 +329,8 @@ public class SessionSchedulingController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "User is not canceled...!").show();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException | SchedulingConfiltException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();        }
     }
 
     @FXML

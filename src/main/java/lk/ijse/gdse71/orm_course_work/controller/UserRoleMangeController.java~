@@ -10,7 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.UserBo;
-import lk.ijse.gdse71.orm_course_work.bo.exception.DuplicateException;
 import lk.ijse.gdse71.orm_course_work.bo.exception.MissingFieldException;
 import lk.ijse.gdse71.orm_course_work.dto.UserDto;
 import lk.ijse.gdse71.orm_course_work.dto.tm.UserTm;
@@ -143,7 +142,7 @@ public class UserRoleMangeController implements Initializable {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } catch (MissingFieldException | DuplicateException e) {
+        } catch (MissingFieldException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
@@ -205,8 +204,8 @@ public class UserRoleMangeController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "User is not updated...!").show();
             }
-        } catch (SQLException | MissingFieldException | DuplicateException e) {
-           new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -228,6 +227,7 @@ public class UserRoleMangeController implements Initializable {
 
     @FXML
     void comboBoxRoleOnAction(ActionEvent event) {
+        // No validation needed here
     }
 
     @FXML

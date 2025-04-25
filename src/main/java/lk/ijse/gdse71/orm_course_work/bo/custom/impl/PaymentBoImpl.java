@@ -1,6 +1,8 @@
 package lk.ijse.gdse71.orm_course_work.bo.custom.impl;
 
 import lk.ijse.gdse71.orm_course_work.bo.custom.PaymentBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.PaymentException;
+import lk.ijse.gdse71.orm_course_work.bo.exception.PaymentProcessingException;
 import lk.ijse.gdse71.orm_course_work.config.FactoryConfiguration;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
 import lk.ijse.gdse71.orm_course_work.dao.custom.PatientProgrmasDao;
@@ -65,7 +67,11 @@ public class PaymentBoImpl implements PaymentBo {
     }
 
     @Override
-    public boolean save(PaymentDto dto) throws SQLException {
+    public boolean save(PaymentDto dto) throws SQLException, PaymentProcessingException {
+        if (dto.getPayment_id().isEmpty() && dto.getDate()==null&& dto.getStatus().isEmpty() && dto.getAmount()==0 && dto.getPaymentType().isEmpty()) {
+            throw new PaymentProcessingException("Missing fields");
+        }
+
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -105,7 +111,11 @@ public class PaymentBoImpl implements PaymentBo {
     }
 
     @Override
-    public boolean update(PaymentDto dto) throws SQLException {
+    public boolean update(PaymentDto dto) throws SQLException, PaymentProcessingException {
+
+        if (dto.getPayment_id().isEmpty() && dto.getDate()==null&& dto.getStatus().isEmpty() && dto.getAmount()==0 && dto.getPaymentType().isEmpty()) {
+            throw new PaymentProcessingException("Missing fields");
+        }
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 

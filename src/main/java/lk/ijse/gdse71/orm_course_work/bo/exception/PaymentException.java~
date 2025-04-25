@@ -1,0 +1,11 @@
+package lk.ijse.gdse71.orm_course_work.bo.exception;
+
+public class PaymentProccesingExcetion extends CustomeException{
+    public PaymentProccesingExcetion(String message) {
+        super(message);
+    }
+    public PaymentProccesingExcetion(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+

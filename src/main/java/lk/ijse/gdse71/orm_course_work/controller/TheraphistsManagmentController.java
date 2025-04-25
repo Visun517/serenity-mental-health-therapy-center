@@ -15,6 +15,8 @@ import lk.ijse.gdse71.orm_course_work.HelloApplication;
 import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.ProgramsBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.TheraphistsBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.DuplicateException;
+import lk.ijse.gdse71.orm_course_work.bo.exception.MissingFieldException;
 import lk.ijse.gdse71.orm_course_work.dto.TherapistDto;
 import lk.ijse.gdse71.orm_course_work.dto.tm.TherapistTm;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram;
@@ -163,7 +165,9 @@ public class TheraphistsManagmentController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Therapist is not saved...!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | MissingFieldException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (DuplicateException e) {
             throw new RuntimeException(e);
         }
     }
@@ -228,7 +232,9 @@ public class TheraphistsManagmentController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Therapist is not updated...!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | MissingFieldException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (DuplicateException e) {
             throw new RuntimeException(e);
         }
     }

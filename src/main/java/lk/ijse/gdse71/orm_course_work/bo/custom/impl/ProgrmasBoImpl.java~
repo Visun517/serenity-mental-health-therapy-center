@@ -1,8 +1,6 @@
 package lk.ijse.gdse71.orm_course_work.bo.custom.impl;
 
 import lk.ijse.gdse71.orm_course_work.bo.custom.ProgramsBo;
-import lk.ijse.gdse71.orm_course_work.bo.exception.DuplicateException;
-import lk.ijse.gdse71.orm_course_work.bo.exception.MissingFieldException;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
 import lk.ijse.gdse71.orm_course_work.dao.custom.PatientProgrmasDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.ProgrmasDao;
@@ -55,14 +53,7 @@ public class ProgrmasBoImpl implements ProgramsBo {
     }
 
     @Override
-    public boolean save(ProgramDto programDto) throws SQLException, MissingFieldException, DuplicateException {
-
-        if (programDto.getFee()== 0 && programDto.getDuration()==null && programDto.getName()==null && programDto.getDescription()==null) {
-            throw new MissingFieldException("Missing fields");
-        }
-        if (progrmasDao.getIdFromProgram(programDto.getTheraphy_pro_id()) != null) {
-            throw new DuplicateException("Duplicate program");
-        }
+    public boolean save(ProgramDto programDto) throws SQLException {
         TheraphyProgram program = new TheraphyProgram();
         program.setTheraphy_pro_id(programDto.getTheraphy_pro_id());
         program.setName(programDto.getName());
@@ -74,13 +65,7 @@ public class ProgrmasBoImpl implements ProgramsBo {
     }
 
     @Override
-    public boolean update(ProgramDto programDto) throws SQLException, MissingFieldException, DuplicateException {
-        if (programDto.getFee()== 0 && programDto.getDuration()==null && programDto.getName()==null && programDto.getDescription()==null) {
-            throw new MissingFieldException("Missing fields");
-        }
-        if (progrmasDao.getIdFromProgram(programDto.getTheraphy_pro_id()) != null) {
-            throw new DuplicateException("Duplicate program");
-        }
+    public boolean update(ProgramDto programDto) throws SQLException {
         TheraphyProgram program = new TheraphyProgram();
         program.setTheraphy_pro_id(programDto.getTheraphy_pro_id());
         program.setName(programDto.getName());

@@ -1,6 +1,8 @@
 package lk.ijse.gdse71.orm_course_work.bo.custom.impl;
 
 import lk.ijse.gdse71.orm_course_work.bo.custom.TheraphistsBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.DuplicateException;
+import lk.ijse.gdse71.orm_course_work.bo.exception.MissingFieldException;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
 import lk.ijse.gdse71.orm_course_work.dao.custom.ProgrmasDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.QueryDao;
@@ -55,7 +57,14 @@ public class TheraphistsBoImpl implements TheraphistsBo {
     }
 
     @Override
-    public boolean saveTherapist(TherapistDto therapistDto,List<String> programNames) throws SQLException {
+    public boolean saveTherapist(TherapistDto therapistDto,List<String> programNames) throws SQLException, MissingFieldException, DuplicateException {
+
+        if (therapistDto.getContact().isEmpty() && therapistDto.getName().isEmpty() && therapistDto.getEmail().isEmpty()) {
+            throw new MissingFieldException("Missing fields");
+        }
+        if (theraphistsDao.getTherapist(therapistDto.getTheraphists_id()) != null) {
+            throw new DuplicateException("Duplicate therapist");
+        }
         Theraphist theraphist = new Theraphist();
         theraphist.setTheraphists_id(therapistDto.getTheraphists_id());
         theraphist.setName(therapistDto.getName());
@@ -80,7 +89,15 @@ public class TheraphistsBoImpl implements TheraphistsBo {
     }
 
     @Override
-    public boolean update(TherapistDto therapistDto,List<String> programNames) throws SQLException {
+    public boolean update(TherapistDto therapistDto,List<String> programNames) throws SQLException, MissingFieldException, DuplicateException {
+
+        if (therapistDto.getContact().isEmpty() && therapistDto.getName().isEmpty() && therapistDto.getEmail().isEmpty()) {
+            throw new MissingFieldException("Missing fields");
+        }
+        if (theraphistsDao.getTherapist(therapistDto.getTheraphists_id()) != null) {
+            throw new DuplicateException("Duplicate therapist");
+        }
+
         Theraphist theraphist = new Theraphist();
         theraphist.setTheraphists_id(therapistDto.getTheraphists_id());
         theraphist.setName(therapistDto.getName());

@@ -10,10 +10,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.ProgramsBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.DuplicateException;
+import lk.ijse.gdse71.orm_course_work.bo.exception.MissingFieldException;
 import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
 import lk.ijse.gdse71.orm_course_work.dto.tm.ProgramTm;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -147,17 +150,19 @@ public class TheraphyProgramManagmentController implements Initializable {
         programDto.setFee(Double.parseDouble(fee));
         programDto.setDescription(description);
 
-        try {
-            boolean isSaved = programBo.save(programDto);
-            if (isSaved) {
-                new Alert(Alert.AlertType.INFORMATION, "Program is saved...!").show();
-                refresh();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Program is not saved...!").show();
+
+            boolean isSaved = false;
+            try {
+                isSaved = programBo.save(programDto);
+                if (isSaved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Program is saved...!").show();
+                    refresh();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Program is not saved...!").show();
+                }
+            } catch (SQLException | MissingFieldException | DuplicateException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
@@ -224,8 +229,8 @@ public class TheraphyProgramManagmentController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Program is not updated...!").show();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException | MissingFieldException | DuplicateException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 

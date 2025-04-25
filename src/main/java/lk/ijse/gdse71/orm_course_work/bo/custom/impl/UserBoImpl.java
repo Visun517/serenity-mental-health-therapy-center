@@ -3,10 +3,14 @@ package lk.ijse.gdse71.orm_course_work.bo.custom.impl;
 import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.PasswordEncryptBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.UserBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.DuplicateException;
+import lk.ijse.gdse71.orm_course_work.bo.exception.InvalidCredentialException;
+import lk.ijse.gdse71.orm_course_work.bo.exception.MissingFieldException;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
 import lk.ijse.gdse71.orm_course_work.dao.custom.UserDao;
 import lk.ijse.gdse71.orm_course_work.dto.UserDto;
 import lk.ijse.gdse71.orm_course_work.entity.User;
+import lombok.SneakyThrows;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,16 +21,19 @@ public class UserBoImpl implements UserBo {
     private final PasswordEncryptBo passwordEncryptBo = BoFactory.getInstance().getBo(BoFactory.BOType.PASSWORD);
 
     @Override
-    public UserDto getUser(String userName) {
+    public UserDto getUser(String userName) throws InvalidCredentialException {
 
         User user = userDao.getUser(userName);
-        UserDto userDto = new UserDto();
-        userDto.setUser_id(user.getUser_id());
-        userDto.setPassword(user.getPassword());
-        userDto.setUsername(user.getUsername());
-        userDto.setRole(user.getRole());
-        return userDto;
 
+        if (user != null) {
+            UserDto userDto = new UserDto();
+            userDto.setUser_id(user.getUser_id());
+            userDto.setPassword(user.getPassword());
+            userDto.setUsername(user.getUsername());
+            userDto.setRole(user.getRole());
+            return userDto;
+        }
+        throw new InvalidCredentialException("Invalid username or password");
     }
 
     @Override
@@ -43,7 +50,15 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public boolean save(UserDto userDto) throws SQLException {
+    public boolean save(UserDto userDto) throws SQLException, MissingFieldException, DuplicateException {
+
+        if (userDto.getPassword().isEmpty() && userDto.getUsername().isEmpty() && userDto.getUser_id().isEmpty() && userDto.getRole().isEmpty()) {
+            throw new MissingFieldException("Missing fields");
+        }
+
+        if (userDao.getUser(userDto.getUsername()) != null) {
+            throw new DuplicateException("Duplicate user");
+        }
         User user = new User();
         user.setUser_id(userDto.getUser_id());
         user.setUsername(userDto.getUsername());
@@ -75,7 +90,14 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public boolean update(UserDto dto) throws SQLException {
+    public boolean update(UserDto dto) throws SQLException, MissingFieldException, DuplicateException {
+        if (dto.getPassword().isEmpty() && dto.getUsername().isEmpty() && dto.getUser_id().isEmpty() && dto.getRole().isEmpty()) {
+            throw new MissingFieldException("Missing fields");
+        }
+
+        if (userDao.getUser(dto.getUsername()) != null) {
+            throw new DuplicateException("Duplicate user");
+        }
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setUser_id(dto.getUser_id());

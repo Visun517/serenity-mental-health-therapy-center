@@ -15,6 +15,7 @@ import lk.ijse.gdse71.orm_course_work.HelloApplication;
 import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.PatientBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.ProgramsBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.RegistrationException;
 import lk.ijse.gdse71.orm_course_work.dto.PatientDto;
 import lk.ijse.gdse71.orm_course_work.dto.tm.PatientTm;
 import lk.ijse.gdse71.orm_course_work.entity.PatinetProgramsDetailsIds;
@@ -223,8 +224,8 @@ public class PatientManagmentController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Patient is not saved...!").show();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | RegistrationException e) {
+           new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
@@ -317,8 +318,8 @@ public class PatientManagmentController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Patient is not update...!").show();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | RegistrationException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 

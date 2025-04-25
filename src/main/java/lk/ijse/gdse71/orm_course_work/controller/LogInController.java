@@ -12,6 +12,7 @@ import lk.ijse.gdse71.orm_course_work.HelloApplication;
 import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.PasswordEncryptBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.UserBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.InvalidCredentialException;
 import lk.ijse.gdse71.orm_course_work.dto.UserDto;
 import lk.ijse.gdse71.orm_course_work.userDetails.UserDetails;
 
@@ -66,12 +67,19 @@ public class LogInController {
             return;
         }
 
-        UserDto user = userBo.getUser(userName);
+        UserDto user = null;
+        try {
+            user = userBo.getUser(userName);
+        } catch (InvalidCredentialException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
         UserDetails.getInstance().setLoggedInUser(user);
-        boolean isMatched = passwordEncryptBo.checkedPassword(password, user.getPassword());
 
-        if (user != null && isMatched) {
-            if (user.getRole().equalsIgnoreCase("admin")) {
+        if (user != null) {
+
+            boolean isMatched = passwordEncryptBo.checkedPassword(password, user.getPassword());
+
+            if (isMatched &&user.getRole().equalsIgnoreCase("admin")) {
                 Stage stage = (Stage) ancMain.getScene().getWindow();
                 stage.close();
 
@@ -81,7 +89,7 @@ public class LogInController {
                 stage1.setTitle("Admin Dashboard..!");
                 stage1.setScene(scene);
                 stage1.show();
-            } else if (user.getRole().equalsIgnoreCase("receptionist")) {
+            } else if (isMatched && user.getRole().equalsIgnoreCase("receptionist")) {
                 Stage stage = (Stage) ancMain.getScene().getWindow();
                 stage.close();
 
@@ -92,8 +100,6 @@ public class LogInController {
                 stage1.setScene(scene);
                 stage1.show();
             }
-        } else {
-            new Alert(Alert.AlertType.ERROR, "User not found or incorrect password!").show();
         }
     }
 

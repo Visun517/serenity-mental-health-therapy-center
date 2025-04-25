@@ -1,0 +1,7 @@
+package lk.ijse.gdse71.orm_course_work.bo.exception;
+
+public class DuplicateException extends RegistrationException{
+    public DuplicateException(String message) {
+        super(message);
+    }
+}

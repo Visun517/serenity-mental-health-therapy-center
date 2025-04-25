@@ -17,6 +17,7 @@ import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.PaymentBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.ProgramsBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.SessionBo;
+import lk.ijse.gdse71.orm_course_work.bo.exception.PaymentProcessingException;
 import lk.ijse.gdse71.orm_course_work.dto.PaymentDto;
 import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
 import lk.ijse.gdse71.orm_course_work.dto.SessionDto;
@@ -221,8 +222,8 @@ public class PaymentManagementController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Payment is not saved").show();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | PaymentProcessingException e) {
+            new Alert(Alert.AlertType.ERROR, "Error: " + e.getMessage()).show();
         }
     }
 
@@ -313,8 +314,8 @@ public class PaymentManagementController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Payment is not updated").show();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | PaymentProcessingException e) {
+            new Alert(Alert.AlertType.ERROR, "Error: " + e.getMessage()).show();
         }
     }
 
