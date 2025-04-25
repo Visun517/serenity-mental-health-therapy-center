@@ -13,5 +13,4 @@ public interface PatientProgrmasDao extends CrudDao<PatientProgramsDetails> {
     PatientProgramsDetails getDuePayment(PatinetProgramsDetailsIds patinetProgramsDetailsIds);
     boolean reducePayment(PatinetProgramsDetailsIds patinetProgramsDetailsIds,double amount, Session session);
     boolean addUpPayment(PatinetProgramsDetailsIds patinetProgramsDetailsIds, double amount, Session session);
-    List<String> getProgramsByPatientId(String patientId);
 }

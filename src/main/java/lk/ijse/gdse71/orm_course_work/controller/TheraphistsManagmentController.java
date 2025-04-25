@@ -87,8 +87,8 @@ public class TheraphistsManagmentController implements Initializable {
     @FXML
     private Button btnTrackschedule;
 
-     private final ProgramsBo programsBo = BoFactory.getInstance().getBo(BoFactory.BOType.PROGRAMS);
-     private final TheraphistsBo theraphistsBo = BoFactory.getInstance().getBo(BoFactory.BOType.THERAPIST);
+    private final ProgramsBo programsBo = BoFactory.getInstance().getBo(BoFactory.BOType.PROGRAMS);
+    private final TheraphistsBo theraphistsBo = BoFactory.getInstance().getBo(BoFactory.BOType.THERAPIST);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -104,118 +104,191 @@ public class TheraphistsManagmentController implements Initializable {
     }
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-        String id = lblTHeraphistIdShow.getText();
+    void btnSaveOnAction(ActionEvent event) {
+        String name = txtName.getText().trim();
+        String email = txtEmail.getText().trim();
+        String contact = txtContact.getText().trim();
+        List<String> programNames = lstPrograms.getSelectionModel().getSelectedItems();
 
-        try {
-            boolean isDelete = theraphistsBo.delete(id);
-            if (isDelete){
-                new Alert(Alert.AlertType.INFORMATION, "Therapist is deleted...!").show();
-                getAll();
-                refresh();
-            }else{
-                new Alert(Alert.AlertType.ERROR, "Therapist is not deleted...!").show();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        // Regex patterns
+        String nameRegex = "^[A-Za-z\\s]{3,50}$";
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String contactRegex = "^0\\d{9}$";
+
+        // Validate name
+        if (name.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Name cannot be empty!").show();
+            return;
+        } else if (!name.matches(nameRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid name! Use 3-50 characters (letters and spaces only).").show();
+            return;
         }
 
-    }
+        // Validate email
+        if (email.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Email cannot be empty!").show();
+            return;
+        } else if (!email.matches(emailRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid email format! (e.g., example@domain.com)").show();
+            return;
+        }
 
-    @FXML
-    void btnSaveOnAction(ActionEvent event) {
+        // Validate contact
+        if (contact.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Contact cannot be empty!").show();
+            return;
+        } else if (!contact.matches(contactRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid contact number! Must be 10 digits starting with 0 (e.g., 0712345678).").show();
+            return;
+        }
+
+        // Validate programs selection
+        if (programNames.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select at least one program!").show();
+            return;
+        }
+
         TherapistDto therapistDto = new TherapistDto();
         therapistDto.setTheraphists_id(lblTHeraphistIdShow.getText());
-        therapistDto.setName(txtName.getText());
-        therapistDto.setEmail(txtEmail.getText());
-        therapistDto.setContact(txtContact.getText());
+        therapistDto.setName(name);
+        therapistDto.setEmail(email);
+        therapistDto.setContact(contact);
 
-        List<String> programNames = lstPrograms.getSelectionModel().getSelectedItems();
         try {
-            boolean isSaved = theraphistsBo.saveTherapist(therapistDto,programNames);
-            if (isSaved){
+            boolean isSaved = theraphistsBo.saveTherapist(therapistDto, programNames);
+            if (isSaved) {
                 getAll();
                 refresh();
                 new Alert(Alert.AlertType.INFORMATION, "Therapist is saved...!").show();
-            }else{
+            } else {
                 new Alert(Alert.AlertType.ERROR, "Therapist is not saved...!").show();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @FXML
     void btnUpadateOnAction(ActionEvent event) {
+        String name = txtName.getText().trim();
+        String email = txtEmail.getText().trim();
+        String contact = txtContact.getText().trim();
+        List<String> programNames = lstPrograms.getSelectionModel().getSelectedItems();
+
+        // Regex patterns
+        String nameRegex = "^[A-Za-z\\s]{3,50}$";
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String contactRegex = "^0\\d{9}$";
+
+        // Validate name
+        if (name.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Name cannot be empty!").show();
+            return;
+        } else if (!name.matches(nameRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid name! Use 3-50 characters (letters and spaces only).").show();
+            return;
+        }
+
+        // Validate email
+        if (email.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Email cannot be empty!").show();
+            return;
+        } else if (!email.matches(emailRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid email format! (e.g., example@domain.com)").show();
+            return;
+        }
+
+        // Validate contact
+        if (contact.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Contact cannot be empty!").show();
+            return;
+        } else if (!contact.matches(contactRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid contact number! Must be 10 digits starting with 0 (e.g., 0712345678).").show();
+            return;
+        }
+
+        // Validate programs selection
+        if (programNames.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select at least one program!").show();
+            return;
+        }
+
         TherapistDto therapistDto = new TherapistDto();
         therapistDto.setTheraphists_id(lblTHeraphistIdShow.getText());
-        therapistDto.setName(txtName.getText());
-        therapistDto.setEmail(txtEmail.getText());
-        therapistDto.setContact(txtContact.getText());
+        therapistDto.setName(name);
+        therapistDto.setEmail(email);
+        therapistDto.setContact(contact);
 
-        List<String> programNames = lstPrograms.getSelectionModel().getSelectedItems();
         try {
-            boolean isUpdate = theraphistsBo.update(therapistDto,programNames);
-            if (isUpdate){
+            boolean isUpdate = theraphistsBo.update(therapistDto, programNames);
+            if (isUpdate) {
                 getAll();
                 refresh();
                 new Alert(Alert.AlertType.INFORMATION, "Therapist is updated...!").show();
-            }else{
+            } else {
                 new Alert(Alert.AlertType.ERROR, "Therapist is not updated...!").show();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @FXML
-    void cmbProgrmasOnAction(ActionEvent event) {
+    void btnDeleteOnAction(ActionEvent event) {
+        String id = lblTHeraphistIdShow.getText();
 
+        try {
+            boolean isDelete = theraphistsBo.delete(id);
+            if (isDelete) {
+                new Alert(Alert.AlertType.INFORMATION, "Therapist is deleted...!").show();
+                getAll();
+                refresh();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Therapist is not deleted...!").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     void tblTheraphistsOncliked(MouseEvent event) {
         TherapistTm selectedItem = tblTheraphists.getSelectionModel().getSelectedItem();
 
-        if (selectedItem != null){
+        if (selectedItem != null) {
             lblTHeraphistIdShow.setText(selectedItem.getTheraphists_id());
             txtName.setText(selectedItem.getName());
             txtEmail.setText(selectedItem.getEmail());
             txtContact.setText(selectedItem.getContact());
 
-            try{
+            try {
                 List<TheraphyProgram> assigningPrograms = theraphistsBo.getAssigningPrograms(selectedItem.getTheraphists_id());
-//                lstPrograms.getSelectionModel().clearSelection();
+                lstPrograms.getSelectionModel().clearSelection();
 
                 for (TheraphyProgram theraphyProgram : assigningPrograms) {
                     lstPrograms.getSelectionModel().select(theraphyProgram.getName());
                 }
-
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
-            new Alert(Alert.AlertType.ERROR, "Select Theraphist...!").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Select Therapist...!").show();
         }
-
     }
 
-    void refresh(){
+    void refresh() {
         setProgramsCmb();
         try {
             lblTHeraphistIdShow.setText(theraphistsBo.getNextId());
             txtEmail.setText("");
             txtName.setText("");
             txtContact.setText("");
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public void setProgramsCmb(){
+
+    public void setProgramsCmb() {
         try {
             List<String> programs = programsBo.getAllPrograms();
             ObservableList<String> progrmas = FXCollections.observableArrayList(programs);
@@ -225,8 +298,7 @@ public class TheraphistsManagmentController implements Initializable {
         }
     }
 
-    public void getAll(){
-
+    public void getAll() {
         try {
             List<TherapistDto> therapistDtos = theraphistsBo.getAll();
             ObservableList<TherapistTm> therapistTms = FXCollections.observableArrayList();
@@ -246,7 +318,6 @@ public class TheraphistsManagmentController implements Initializable {
         }
     }
 
-
     @FXML
     void btnTrackscheduleOnAction(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/TrackSchedulesBoard.fxml"));
@@ -256,5 +327,4 @@ public class TheraphistsManagmentController implements Initializable {
         stage1.setScene(scene);
         stage1.show();
     }
-
 }

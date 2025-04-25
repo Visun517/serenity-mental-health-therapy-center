@@ -4,7 +4,6 @@ import lk.ijse.gdse71.orm_course_work.bo.custom.ProgramsBo;
 import lk.ijse.gdse71.orm_course_work.dao.DaoFactory;
 import lk.ijse.gdse71.orm_course_work.dao.custom.PatientProgrmasDao;
 import lk.ijse.gdse71.orm_course_work.dao.custom.ProgrmasDao;
-import lk.ijse.gdse71.orm_course_work.dto.FilterDto;
 import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
 import lk.ijse.gdse71.orm_course_work.entity.PatientProgramsDetails;
 import lk.ijse.gdse71.orm_course_work.entity.TheraphyProgram;
@@ -111,6 +110,12 @@ public class ProgrmasBoImpl implements ProgramsBo {
              payment += theraphyProgram.getFee();
         }
         return payment;
+    }
+
+    @Override
+    public List<String> getProgramsByPatientId(String patientId) {
+        List<String> ids = patientProgrmasDao.getProgramsByPatientId(patientId);
+        return ids;
     }
 
 }

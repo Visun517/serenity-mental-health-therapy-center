@@ -104,5 +104,14 @@ public class PatientProgramsDaoImpl implements PatientProgrmasDao {
             return false;
         }
     }
+
+    @Override
+    public List<String> getProgramsByPatientId(String patientId) {
+        Session session = factoryConfiguration.getSession();
+        String hql = "SELECT p.theraphyProgram.theraphy_pro_id FROM Patient pt JOIN pt.patientProgramsDetails p WHERE pt.patient_id = :patientId";
+        Query<String> query = session.createQuery(hql, String.class);
+        query.setParameter("patientId", patientId);
+        return query.getResultList();
+    }
 }
 

@@ -1,7 +1,6 @@
 package lk.ijse.gdse71.orm_course_work.bo.custom;
 
 import lk.ijse.gdse71.orm_course_work.bo.SuperBo;
-import lk.ijse.gdse71.orm_course_work.dto.FilterDto;
 import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
 
 import java.sql.SQLException;
@@ -16,5 +15,6 @@ public interface ProgramsBo extends SuperBo {
      boolean delete(String id) throws SQLException;
      String getProgramName(String selectedItem);
      ProgramDto getProgram(String programId);
-    double getTotalIncome() throws SQLException;
+     double getTotalIncome() throws SQLException;
+     List<String> getProgramsByPatientId(String patientId);
 }

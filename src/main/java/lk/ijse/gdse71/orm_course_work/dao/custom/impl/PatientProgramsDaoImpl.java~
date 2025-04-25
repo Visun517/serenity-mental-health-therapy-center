@@ -2,12 +2,14 @@ package lk.ijse.gdse71.orm_course_work.dao.custom.impl;
 
 import lk.ijse.gdse71.orm_course_work.config.FactoryConfiguration;
 import lk.ijse.gdse71.orm_course_work.dao.custom.PatientProgrmasDao;
+import lk.ijse.gdse71.orm_course_work.entity.Patient;
 import lk.ijse.gdse71.orm_course_work.entity.PatientProgramsDetails;
 import lk.ijse.gdse71.orm_course_work.entity.PatinetProgramsDetailsIds;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatientProgramsDaoImpl implements PatientProgrmasDao {
@@ -20,7 +22,8 @@ public class PatientProgramsDaoImpl implements PatientProgrmasDao {
 
     @Override
     public List<PatientProgramsDetails> getAll() throws SQLException {
-        return List.of();
+        Session session = factoryConfiguration.getSession();
+        return session.createQuery("from PatientProgramsDetails ", PatientProgramsDetails.class).list();
     }
 
     @Override
@@ -100,6 +103,15 @@ public class PatientProgramsDaoImpl implements PatientProgrmasDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<String> getProgramsByPatientId(String patientId) {
+        Session session = factoryConfiguration.getSession();
+        String hql = "SELECT p.theraphyProId FROM Patient pt JOIN pt.programs p WHERE pt.patientId = :patientId";
+        Query<String> query = session.createQuery(hql, String.class);
+        query.setParameter("patientId", patientId);
+        return query.getResultList();
     }
 }
 

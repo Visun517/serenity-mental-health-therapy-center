@@ -137,7 +137,7 @@ public class PaymentBoImpl implements PaymentBo {
                 if (secondPayment.getAmount() > payment.getAmount()) {
                     patientProgrmasDao.addUpPayment(patinetProgramsDetailsIds, payment.getAmount(), session);
                 } else {
-                    patientProgrmasDao.reducePayment(patinetProgramsDetailsIds,updatedAmount, session);
+                    patientProgrmasDao.reducePayment(patinetProgramsDetailsIds, payment.getAmount(), session);
                 }
 
             }

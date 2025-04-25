@@ -252,7 +252,7 @@ public class TheraphistsManagmentController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/TrackSchedulesBoard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage1 = new Stage();
-        stage1.setTitle("TrackSchedules Board..!");
+        stage1.setTitle("Track Schedules Board..!");
         stage1.setScene(scene);
         stage1.show();
     }

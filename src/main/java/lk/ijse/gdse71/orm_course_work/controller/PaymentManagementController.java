@@ -17,14 +17,11 @@ import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.PaymentBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.ProgramsBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.SessionBo;
-import lk.ijse.gdse71.orm_course_work.dto.PatientProgramsDetailsDto;
 import lk.ijse.gdse71.orm_course_work.dto.PaymentDto;
 import lk.ijse.gdse71.orm_course_work.dto.ProgramDto;
 import lk.ijse.gdse71.orm_course_work.dto.SessionDto;
 import lk.ijse.gdse71.orm_course_work.dto.tm.PaymentTm;
 import lk.ijse.gdse71.orm_course_work.entity.PatinetProgramsDetailsIds;
-import lk.ijse.gdse71.orm_course_work.entity.Payment;
-import lk.ijse.gdse71.orm_course_work.entity.TheraphySession;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,8 +29,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -137,60 +132,95 @@ public class PaymentManagementController implements Initializable {
 
         btnReport.setDisable(true);
         refresh();
-
-    }
-
-    @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-        String paymentId = lblPaymentIDShow.getText();
-        try {
-            boolean isDelete = paymentBo.delete(paymentId);
-            if (isDelete){
-                new Alert(Alert.AlertType.INFORMATION, "Payment is deleted").show();
-                refresh();
-            }else{
-                new Alert(Alert.AlertType.ERROR, "Payment is not deleted").show();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     @FXML
     void btnPayOnAction(ActionEvent event) {
         String paymentId = lblPaymentIDShow.getText();
-        double amount = Double.parseDouble(txtAmount.getText());
-        Date date = Date.valueOf(datePicker.getValue());
+        String amountText = txtAmount.getText().trim();
+        LocalDate date = datePicker.getValue();
         String status = cmbStatus.getValue();
-        String paytmentType = cmbPayemntType.getValue();
+        String paymentType = cmbPayemntType.getValue();
         String sessionId = cmbSessionId.getValue();
-        String patientId;
-        String programId;
 
+        // Regex patterns
+        String amountRegex = "^\\d+(\\.\\d{1,2})?$";
+        String sessionIdRegex = "^S\\d{3}$";
+
+        // Validate amount
+        if (amountText.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Amount cannot be empty!").show();
+            return;
+        } else if (!amountText.matches(amountRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid amount! Must be a positive number (e.g., 1500 or 1500.00).").show();
+            return;
+        }
+        double amount = Double.parseDouble(amountText);
+        if (amount <= 0) {
+            new Alert(Alert.AlertType.ERROR, "Amount must be greater than 0!").show();
+            return;
+        }
+
+        // Validate date
+        if (date == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a date!").show();
+            return;
+        } else if (date.isAfter(LocalDate.now())) {
+            new Alert(Alert.AlertType.ERROR, "Date cannot be in the future!").show();
+            return;
+        }
+
+        // Validate status
+        if (status == null || status.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a status!").show();
+            return;
+        }
+
+        // Validate payment type
+        if (paymentType == null || paymentType.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a payment type!").show();
+            return;
+        }
+
+        // Validate session ID
+        if (sessionId == null || sessionId.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a session ID!").show();
+            return;
+        } else if (!sessionId.matches(sessionIdRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid session ID! Format: S followed by 3 digits (e.g., S001).").show();
+            return;
+        }
+
+        // Additional validation: Check if the amount is within the due payment
         try {
             SessionDto session = sessionBo.getSession(sessionId);
-            patientId = session.getPatient_id();
-            programId = session.getProgram_id();
+            PatinetProgramsDetailsIds patinetProgramsDetailsIds = new PatinetProgramsDetailsIds();
+            patinetProgramsDetailsIds.setPatient_id(session.getPatient_id());
+            patinetProgramsDetailsIds.setTheraphy_pro_id(session.getProgram_id());
+            double duePayment = paymentBo.getDuePayment(patinetProgramsDetailsIds);
+
+            if (amount > duePayment) {
+                new Alert(Alert.AlertType.ERROR, "Amount cannot exceed the due payment of LKR " + duePayment + "!").show();
+                return;
+            }
 
             PaymentDto paymentDto = new PaymentDto();
             paymentDto.setPayment_id(paymentId);
             paymentDto.setAmount(amount);
-            paymentDto.setDate(date);
+            paymentDto.setDate(Date.valueOf(date));
             paymentDto.setStatus(status);
             paymentDto.setSessionId(sessionId);
             paymentDto.setPatientId(session.getPatient_id());
             paymentDto.setTheraphyProgramId(session.getProgram_id());
-            paymentDto.setPaymentType(paytmentType);
+            paymentDto.setPaymentType(paymentType);
 
             boolean isPaymentSave = paymentBo.save(paymentDto);
-            if (isPaymentSave){
+            if (isPaymentSave) {
                 new Alert(Alert.AlertType.INFORMATION, "Payment is saved").show();
                 refresh();
-            }else{
+            } else {
                 new Alert(Alert.AlertType.ERROR, "Payment is not saved").show();
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -199,42 +229,109 @@ public class PaymentManagementController implements Initializable {
     @FXML
     void btnUpdateONAction(ActionEvent event) {
         String paymentId = lblPaymentIDShow.getText();
-        double amount = Double.parseDouble(txtAmount.getText());
-        Date date = Date.valueOf(datePicker.getValue());
+        String amountText = txtAmount.getText().trim();
+        LocalDate date = datePicker.getValue();
         String status = cmbStatus.getValue();
-        String paytmentType = cmbPayemntType.getValue();
+        String paymentType = cmbPayemntType.getValue();
         String sessionId = cmbSessionId.getValue();
-        String patientId;
-        String programId;
 
+        // Regex patterns
+        String amountRegex = "^\\d+(\\.\\d{1,2})?$";
+        String sessionIdRegex = "^S\\d{3}$";
+
+        // Validate amount
+        if (amountText.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Amount cannot be empty!").show();
+            return;
+        } else if (!amountText.matches(amountRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid amount! Must be a positive number (e.g., 1500 or 1500.00).").show();
+            return;
+        }
+        double amount = Double.parseDouble(amountText);
+        if (amount <= 0) {
+            new Alert(Alert.AlertType.ERROR, "Amount must be greater than 0!").show();
+            return;
+        }
+
+        // Validate date
+        if (date == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a date!").show();
+            return;
+        } else if (date.isAfter(LocalDate.now())) {
+            new Alert(Alert.AlertType.ERROR, "Date cannot be in the future!").show();
+            return;
+        }
+
+        // Validate status
+        if (status == null || status.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a status!").show();
+            return;
+        }
+
+        // Validate payment type
+        if (paymentType == null || paymentType.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a payment type!").show();
+            return;
+        }
+
+        // Validate session ID
+        if (sessionId == null || sessionId.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a session ID!").show();
+            return;
+        } else if (!sessionId.matches(sessionIdRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid session ID! Format: S followed by 3 digits (e.g., S001).").show();
+            return;
+        }
+
+        // Additional validation: Check if the amount is within the due payment
         try {
             SessionDto session = sessionBo.getSession(sessionId);
-            patientId = session.getPatient_id();
-            programId = session.getProgram_id();
+            PatinetProgramsDetailsIds patinetProgramsDetailsIds = new PatinetProgramsDetailsIds();
+            patinetProgramsDetailsIds.setPatient_id(session.getPatient_id());
+            patinetProgramsDetailsIds.setTheraphy_pro_id(session.getProgram_id());
+            double duePayment = paymentBo.getDuePayment(patinetProgramsDetailsIds);
+
+            if (amount > duePayment) {
+                new Alert(Alert.AlertType.ERROR, "Amount cannot exceed the due payment of LKR " + duePayment + "!").show();
+                return;
+            }
 
             PaymentDto paymentDto = new PaymentDto();
             paymentDto.setPayment_id(paymentId);
             paymentDto.setAmount(amount);
-            paymentDto.setDate(date);
+            paymentDto.setDate(Date.valueOf(date));
             paymentDto.setStatus(status);
             paymentDto.setSessionId(sessionId);
             paymentDto.setPatientId(session.getPatient_id());
             paymentDto.setTheraphyProgramId(session.getProgram_id());
-            paymentDto.setPaymentType(paytmentType);
+            paymentDto.setPaymentType(paymentType);
 
             boolean isPaymentUpdate = paymentBo.update(paymentDto);
-            if (isPaymentUpdate){
-                new Alert(Alert.AlertType.INFORMATION, "Payment is update").show();
+            if (isPaymentUpdate) {
+                new Alert(Alert.AlertType.INFORMATION, "Payment is updated").show();
                 refresh();
-            }else{
-                new Alert(Alert.AlertType.ERROR, "Payment is not update").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Payment is not updated").show();
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
-
+    @FXML
+    void btnDeleteOnAction(ActionEvent event) {
+        String paymentId = lblPaymentIDShow.getText();
+        try {
+            boolean isDelete = paymentBo.delete(paymentId);
+            if (isDelete) {
+                new Alert(Alert.AlertType.INFORMATION, "Payment is deleted").show();
+                refresh();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Payment is not deleted").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -266,14 +363,11 @@ public class PaymentManagementController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @FXML
     void btnReportOnAction(ActionEvent event) throws IOException {
-
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/PaymentInvoice.fxml"));
-
         Parent parent = fxmlLoader.load();
         PaymentInvoiceController paymentInvoiceController = fxmlLoader.getController();
         paymentInvoiceController.setPaymentId(lblPaymentIDShow.getText());
@@ -283,10 +377,9 @@ public class PaymentManagementController implements Initializable {
         stage1.setTitle("Invoice..!");
         stage1.setScene(scene);
         stage1.show();
-
     }
 
-    public void refresh(){
+    public void refresh() {
         setStatus();
         getAll();
         txtAmount.setText("");
@@ -303,22 +396,22 @@ public class PaymentManagementController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void setStatus() {
+        ObservableList<String> status = FXCollections.observableArrayList("Complete", "Pending", "Overdue");
+        cmbStatus.setItems(status);
     }
-    public void setStatus(){
-            ObservableList<String> status = FXCollections.observableArrayList("Complete", "Pending", "Overdue");
-            cmbStatus.setItems(status);
-    }
-    public void setPaymentTypes(){
-            ObservableList<String> status = FXCollections.observableArrayList("Transfer", "Cash", "Credit Card");
+
+    public void setPaymentTypes() {
+        ObservableList<String> status = FXCollections.observableArrayList("Transfer", "Cash", "Credit Card");
         cmbPayemntType.setItems(status);
     }
 
-    public void setSessionIds(){
+    public void setSessionIds() {
         List<SessionDto> all = null;
         try {
             all = sessionBo.getAll();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -329,10 +422,8 @@ public class PaymentManagementController implements Initializable {
                 sessionIds.add(sessionDto.getSession_id());
             }
         }
-
         cmbSessionId.setItems(sessionIds);
     }
-
 
     @FXML
     void cmbSessionIdOnAction(ActionEvent event) {
@@ -349,24 +440,20 @@ public class PaymentManagementController implements Initializable {
             double duePayment = paymentBo.getDuePayment(patinetProgramsDetailsIds);
             lblDuePaymentShow.setText(String.valueOf(duePayment));
 
-            System.out.println(program.getFee());
-            System.out.println(duePayment);
-
             if (program.getFee() == duePayment) {
                 new Alert(Alert.AlertType.ERROR, "Because this patient has not made the upfront payment, they need to pay LKR 10,000 as the upfront payment.").show();
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void getAll(){
+    public void getAll() {
         try {
             List<PaymentDto> all = paymentBo.getAll();
             ObservableList<PaymentTm> paymentTms = FXCollections.observableArrayList();
 
-            for (PaymentDto paymentDto : all){
+            for (PaymentDto paymentDto : all) {
                 PaymentTm paymentTm = new PaymentTm();
                 paymentTm.setPayment_id(paymentDto.getPayment_id());
                 paymentTm.setDate(paymentDto.getDate());
@@ -383,7 +470,5 @@ public class PaymentManagementController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
-
 }

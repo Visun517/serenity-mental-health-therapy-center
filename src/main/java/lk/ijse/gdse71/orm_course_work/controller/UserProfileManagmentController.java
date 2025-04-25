@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.PasswordEncryptBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.UserBo;
@@ -36,65 +35,108 @@ public class UserProfileManagmentController implements Initializable {
     private Label lblUserName;
 
     @FXML
-    private PasswordField txtConfirmPass;
+    private TextField txtConfirmPass;
 
     @FXML
-    private PasswordField txtCurrentPass;
+    private TextField txtCurrentPass;
 
     @FXML
     private TextField txtName;
 
     @FXML
-    private PasswordField txtNewPass;
+    private TextField txtNewPass;
 
     @FXML
     private CheckBox chkShowPassword;
 
-    private  UserDto userDetails;
+    private UserDto userDetails;
 
     private UserBo userBo = BoFactory.getInstance().getBo(BoFactory.BOType.USER);
     private final PasswordEncryptBo passwordEncryptBo = BoFactory.getInstance().getBo(BoFactory.BOType.PASSWORD);
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         UserDto loggedInUser = UserDetails.getInstance().getLoggedInUser();
         userDetails = loggedInUser;
         txtName.setText(loggedInUser.getUsername());
+        chkShowPassword.setVisible(false); // Hide the checkbox since all fields are now TextFields
     }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-
-        if (userDetails == null){
-            System.out.println(userDetails.getUsername());
+        if (userDetails == null) {
             new Alert(Alert.AlertType.ERROR, "User not found...!").show();
             return;
         }
-        boolean isMatched =passwordEncryptBo.checkedPassword(txtCurrentPass.getText(),userDetails.getPassword());
-        if (!isMatched){
-            new Alert(Alert.AlertType.ERROR, "Password is not matched...!").show();
+
+        String username = txtName.getText().trim();
+        String currentPass = txtCurrentPass.getText().trim();
+        String newPass = txtNewPass.getText().trim();
+        String confirmPass = txtConfirmPass.getText().trim();
+
+        // Regex patterns
+        String usernameRegex = "^[a-zA-Z0-9_]{3,20}$";
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
+        // Validate username
+        if (username.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Username cannot be empty!").show();
+            return;
+        } else if (!username.matches(usernameRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid username! Use 3-20 characters (letters, numbers, underscores only).").show();
             return;
         }
-        String newPass = txtNewPass.getText();
-        String reEnterPass = txtConfirmPass.getText();
-        if (!newPass.equals(reEnterPass)){
-            new Alert(Alert.AlertType.ERROR, "New Password and Confirm Password is not matched...!").show();
+
+        // Validate current password
+        if (currentPass.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Current password cannot be empty!").show();
             return;
         }
+        boolean isMatched = passwordEncryptBo.checkedPassword(currentPass, userDetails.getPassword());
+        if (!isMatched) {
+            new Alert(Alert.AlertType.ERROR, "Current password is not matched...!").show();
+            return;
+        }
+
+        // Validate new password
+        if (newPass.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "New password cannot be empty!").show();
+            return;
+        } else if (!newPass.matches(passwordRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid new password! Must be at least 8 characters, with 1 uppercase, 1 lowercase, 1 number, and 1 special character (e.g., Passw0rd!).").show();
+            return;
+        }
+
+        // Validate confirm password
+        if (confirmPass.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Confirm password cannot be empty!").show();
+            return;
+        } else if (!confirmPass.equals(newPass)) {
+            new Alert(Alert.AlertType.ERROR, "New Password and Confirm Password do not match...!").show();
+            return;
+        }
+
+        // Additional validation: Check if new password is the same as the current password
+        if (passwordEncryptBo.checkedPassword(newPass, userDetails.getPassword())) {
+            new Alert(Alert.AlertType.ERROR, "New password cannot be the same as the current password!").show();
+            return;
+        }
+
         try {
-            userDetails.setPassword(txtConfirmPass.getText());
+            userDetails.setUsername(username);
+            userDetails.setPassword(newPass);
             boolean isSaved = userBo.update(userDetails);
-            if (isSaved){
-                new Alert(Alert.AlertType.INFORMATION, "Your new Password is saved").show();
-            }else {
-                new Alert(Alert.AlertType.INFORMATION, "Your new Password is not saved").show();
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Your profile is updated successfully!").show();
+                txtCurrentPass.setText("");
+                txtNewPass.setText("");
+                txtConfirmPass.setText("");
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to update your profile!").show();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @FXML
@@ -105,74 +147,8 @@ public class UserProfileManagmentController implements Initializable {
         txtNewPass.setText("");
     }
 
-    public void chkShowPasswordOnAction(ActionEvent actionEvent) {
-
-        if (chkShowPassword.isSelected()) {
-            // Show passwords
-            TextField tempCurrent = new TextField();
-            tempCurrent.setText(txtCurrentPass.getText());
-            tempCurrent.setLayoutX(txtCurrentPass.getLayoutX());
-            tempCurrent.setLayoutY(txtCurrentPass.getLayoutY());
-            tempCurrent.setPrefHeight(txtCurrentPass.getPrefHeight());
-            tempCurrent.setPrefWidth(txtCurrentPass.getPrefWidth());
-            tempCurrent.setStyle(txtCurrentPass.getStyle());
-
-            TextField tempNew = new TextField();
-            tempNew.setText(txtNewPass.getText());
-            tempNew.setLayoutX(txtNewPass.getLayoutX());
-            tempNew.setLayoutY(txtNewPass.getLayoutY());
-            tempNew.setPrefHeight(txtNewPass.getPrefHeight());
-            tempNew.setPrefWidth(txtNewPass.getPrefWidth());
-            tempNew.setStyle(txtNewPass.getStyle());
-
-            TextField tempConfirm = new TextField();
-            tempConfirm.setText(txtConfirmPass.getText());
-            tempConfirm.setLayoutX(txtConfirmPass.getLayoutX());
-            tempConfirm.setLayoutY(txtConfirmPass.getLayoutY());
-            tempConfirm.setPrefHeight(txtConfirmPass.getPrefHeight());
-            tempConfirm.setPrefWidth(txtConfirmPass.getPrefWidth());
-            tempConfirm.setStyle(txtConfirmPass.getStyle());
-
-            AnchorPane parent = (AnchorPane) txtCurrentPass.getParent();
-            parent.getChildren().removeAll(txtCurrentPass, txtNewPass, txtConfirmPass);
-            parent.getChildren().addAll(tempCurrent, tempNew, tempConfirm);
-
-            txtCurrentPass = (PasswordField) tempCurrent;
-            txtNewPass = (PasswordField) tempNew;
-            txtConfirmPass = (PasswordField) tempConfirm;
-        } else {
-            // Hide passwords
-            PasswordField tempCurrent = new PasswordField();
-            tempCurrent.setText(txtCurrentPass.getText());
-            tempCurrent.setLayoutX(txtCurrentPass.getLayoutX());
-            tempCurrent.setLayoutY(txtCurrentPass.getLayoutY());
-            tempCurrent.setPrefHeight(txtCurrentPass.getPrefHeight());
-            tempCurrent.setPrefWidth(txtCurrentPass.getPrefWidth());
-            tempCurrent.setStyle(txtCurrentPass.getStyle());
-
-            PasswordField tempNew = new PasswordField();
-            tempNew.setText(txtNewPass.getText());
-            tempNew.setLayoutX(txtNewPass.getLayoutX());
-            tempNew.setLayoutY(txtNewPass.getLayoutY());
-            tempNew.setPrefHeight(txtNewPass.getPrefHeight());
-            tempNew.setPrefWidth(txtNewPass.getPrefWidth());
-            tempNew.setStyle(txtNewPass.getStyle());
-
-            PasswordField tempConfirm = new PasswordField();
-            tempConfirm.setText(txtConfirmPass.getText());
-            tempConfirm.setLayoutX(txtConfirmPass.getLayoutX());
-            tempConfirm.setLayoutY(txtConfirmPass.getLayoutY());
-            tempConfirm.setPrefHeight(txtConfirmPass.getPrefHeight());
-            tempConfirm.setPrefWidth(txtConfirmPass.getPrefWidth());
-            tempConfirm.setStyle(txtConfirmPass.getStyle());
-
-            AnchorPane parent = (AnchorPane) txtCurrentPass.getParent();
-            parent.getChildren().removeAll(txtCurrentPass, txtNewPass, txtConfirmPass);
-            parent.getChildren().addAll(tempCurrent, tempNew, tempConfirm);
-
-            txtCurrentPass = tempCurrent;
-            txtNewPass = tempNew;
-            txtConfirmPass = tempConfirm;
-        }
+    @FXML
+    void chkShowPasswordOnAction(ActionEvent actionEvent) {
+        // No need for this method anymore since all fields are TextFields
     }
 }

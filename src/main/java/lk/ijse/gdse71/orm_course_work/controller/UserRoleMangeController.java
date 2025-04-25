@@ -30,16 +30,16 @@ public class UserRoleMangeController implements Initializable {
     private Button btnUpadate;
 
     @FXML
-    private TableColumn<String, String> colUserId;
+    private TableColumn<UserTm, String> colUserId;
 
     @FXML
-    private TableColumn<String, String> colUserName;
+    private TableColumn<UserTm, String> colUserName;
 
     @FXML
-    private TableColumn<String, String> colUserPassword;
+    private TableColumn<UserTm, String> colUserPassword;
 
     @FXML
-    private TableColumn<String, String> colUserRole;
+    private TableColumn<UserTm, String> colUserRole;
 
     @FXML
     private ComboBox<String> comboBoxRole;
@@ -80,101 +80,171 @@ public class UserRoleMangeController implements Initializable {
         colUserRole.setCellValueFactory(new PropertyValueFactory<>("role"));
         comboInit();
         refresh();
-
-
-    }
-    @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-        String userId = lblUserIdShow.getText();
-        try{
-            boolean isDelete = userBo.delete(userId);
-            if (isDelete){
-                new Alert(Alert.AlertType.INFORMATION, "User is deleted...!").show();
-                refresh();
-            }else {
-                new Alert(Alert.AlertType.ERROR, "User is not deleted...!").show();
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
     }
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
+        String username = txtUserName.getText().trim();
+        String password = txtPassword.getText().trim();
+        String role = comboBoxRole.getValue();
 
-    UserDto userDto = new UserDto();
-    userDto.setUser_id(lblUserIdShow.getText());
-    userDto.setUsername(txtUserName.getText());
-    userDto.setPassword(txtPassword.getText());
-    userDto.setRole(comboBoxRole.getValue());
+        // Regex patterns
+        String usernameRegex = "^[a-zA-Z0-9_]{3,20}$";
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
-        try {
-
-                boolean isSaved = userBo.save(userDto);
-                if (isSaved){
-                    new Alert(Alert.AlertType.INFORMATION, "User is saved...!").show();
-                    refresh();
-                }else{
-                    new Alert(Alert.AlertType.ERROR, "User is not saved...!").show();
-                }
-
-
-        }catch (Exception e){
-            e.printStackTrace();
+        // Validate username
+        if (username.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Username cannot be empty!").show();
+            return;
+        } else if (!username.matches(usernameRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid username! Use 3-20 characters (letters, numbers, underscores only).").show();
+            return;
         }
 
+        // Validate password
+        if (password.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Password cannot be empty!").show();
+            return;
+        } else if (!password.matches(passwordRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid password! Must be at least 8 characters, with 1 uppercase, 1 lowercase, 1 number, and 1 special character (e.g., Passw0rd!).").show();
+            return;
+        }
 
+        // Validate role
+        if (role == null || role.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a role!").show();
+            return;
+        }
+
+        // Additional validation: Check if username already exists
+        try {
+            List<UserDto> existingUsers = userBo.getAll();
+            for (UserDto user : existingUsers) {
+                if (user.getUsername().equals(username) && !user.getUser_id().equals(lblUserIdShow.getText())) {
+                    new Alert(Alert.AlertType.ERROR, "Username already exists!").show();
+                    return;
+                }
+            }
+
+            UserDto userDto = new UserDto();
+            userDto.setUser_id(lblUserIdShow.getText());
+            userDto.setUsername(username);
+            userDto.setPassword(password);
+            userDto.setRole(role);
+
+            boolean isSaved = userBo.save(userDto);
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "User is saved...!").show();
+                refresh();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "User is not saved...!").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     void btnUpadateOnAction(ActionEvent event) {
+        String username = txtUserName.getText().trim();
+        String password = txtPassword.getText().trim();
+        String role = comboBoxRole.getValue();
 
-        UserDto userDto = new UserDto();
-        userDto.setUser_id(lblUserIdShow.getText());
-        userDto.setUsername(txtUserName.getText());
-        userDto.setPassword(txtPassword.getText());
-        userDto.setRole(comboBoxRole.getValue());
+        // Regex patterns
+        String usernameRegex = "^[a-zA-Z0-9_]{3,20}$";
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
-        try{
-            boolean isUpdated = userBo.update(userDto);
-            if (isUpdated){
-                new Alert(Alert.AlertType.INFORMATION, "User is updated...!").show();
-                refresh();
-            }else {
-                new Alert(Alert.AlertType.ERROR, "User is not updated...!").show();
-            }
-        }catch (Exception e){
-            e.printStackTrace();
+        // Validate username
+        if (username.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Username cannot be empty!").show();
+            return;
+        } else if (!username.matches(usernameRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid username! Use 3-20 characters (letters, numbers, underscores only).").show();
+            return;
         }
 
+        // Validate password
+        if (password.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Password cannot be empty!").show();
+            return;
+        } else if (!password.matches(passwordRegex)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid password! Must be at least 8 characters, with 1 uppercase, 1 lowercase, 1 number, and 1 special character (e.g., Passw0rd!).").show();
+            return;
+        }
+
+        // Validate role
+        if (role == null || role.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a role!").show();
+            return;
+        }
+
+        // Additional validation: Check if username already exists
+        try {
+            List<UserDto> existingUsers = userBo.getAll();
+            for (UserDto user : existingUsers) {
+                if (user.getUsername().equals(username) && !user.getUser_id().equals(lblUserIdShow.getText())) {
+                    new Alert(Alert.AlertType.ERROR, "Username already exists!").show();
+                    return;
+                }
+            }
+
+            UserDto userDto = new UserDto();
+            userDto.setUser_id(lblUserIdShow.getText());
+            userDto.setUsername(username);
+            userDto.setPassword(password);
+            userDto.setRole(role);
+
+            boolean isUpdated = userBo.update(userDto);
+            if (isUpdated) {
+                new Alert(Alert.AlertType.INFORMATION, "User is updated...!").show();
+                refresh();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "User is not updated...!").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    void btnDeleteOnAction(ActionEvent event) {
+        String userId = lblUserIdShow.getText();
+        try {
+            boolean isDelete = userBo.delete(userId);
+            if (isDelete) {
+                new Alert(Alert.AlertType.INFORMATION, "User is deleted...!").show();
+                refresh();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "User is not deleted...!").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     void comboBoxRoleOnAction(ActionEvent event) {
-
+        // No validation needed here
     }
 
     @FXML
     void tblUserOncliked(MouseEvent event) {
-
         UserTm selectedItem = tblUser.getSelectionModel().getSelectedItem();
 
-        if (selectedItem != null){
+        if (selectedItem != null) {
             lblUserIdShow.setText(selectedItem.getUser_id());
             txtUserName.setText(selectedItem.getUsername());
             comboBoxRole.setValue(selectedItem.getRole());
+            txtPassword.setText(""); // Clear password field for security
         }
-
-
     }
-    public void comboInit(){
-        String [] roles = {"Admin" , "Receptionist"};
+
+    public void comboInit() {
+        String[] roles = {"Admin", "Receptionist"};
         comboBoxRole.getItems().addAll(roles);
     }
 
-    public void refresh(){
-
+    public void refresh() {
         txtPassword.setText("");
         txtUserName.setText("");
         comboBoxRole.setValue("Admin");
@@ -186,7 +256,8 @@ public class UserRoleMangeController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    public void getAll(){
+
+    public void getAll() {
         try {
             List<UserDto> users = userBo.getAll();
             ObservableList<UserTm> userTms = FXCollections.observableArrayList();
