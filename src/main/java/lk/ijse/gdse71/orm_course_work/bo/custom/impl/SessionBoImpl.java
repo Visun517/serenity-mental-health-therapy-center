@@ -145,16 +145,18 @@ public class SessionBoImpl implements SessionBo {
     @Override
     public SessionDto getSession(String sessionId) throws SQLException {
         TheraphySession theraphySession = sessionDao.getSession(sessionId);
-        SessionDto sessionDto = new SessionDto();
-        sessionDto.setSession_id(theraphySession.getSession_id());
-        sessionDto.setProgram_id(theraphySession.getTheraphyProgram().getTheraphy_pro_id());
-        sessionDto.setPatient_id(theraphySession.getPatient().getPatient_id());
-        sessionDto.setDate(theraphySession.getDate());
-        sessionDto.setTime(theraphySession.getTime());
-        sessionDto.setStatus(theraphySession.getStatus());
-        sessionDto.setTherapist_id(theraphySession.getTheraphist().getTheraphists_id());
+        SessionDto sessionDto = null;
+        if (theraphySession != null) {
+            sessionDto = new SessionDto();
+            sessionDto.setSession_id(theraphySession.getSession_id());
+            sessionDto.setProgram_id(theraphySession.getTheraphyProgram().getTheraphy_pro_id());
+            sessionDto.setPatient_id(theraphySession.getPatient().getPatient_id());
+            sessionDto.setDate(theraphySession.getDate());
+            sessionDto.setTime(theraphySession.getTime());
+            sessionDto.setStatus(theraphySession.getStatus());
+            sessionDto.setTherapist_id(theraphySession.getTheraphist().getTheraphists_id());
+        }
         return sessionDto;
-
     }
 
     @Override

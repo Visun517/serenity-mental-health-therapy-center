@@ -147,6 +147,11 @@ public class PaymentBoImpl implements PaymentBo {
                     patientProgrmasDao.addUpPayment(patinetProgramsDetailsIds,addUpAmount, session);
                 } else if (tablePayment.getAmount() < payment.getAmount()) {
                     double reduceAmount =payment.getAmount() - tablePayment.getAmount();
+
+                    System.out.println(reduceAmount);
+                    System.out.println(tablePayment.getAmount());
+                    System.out.println(payment.getAmount());
+
                     patientProgrmasDao.reducePayment(patinetProgramsDetailsIds,reduceAmount, session);
                 }
 

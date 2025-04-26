@@ -106,12 +106,16 @@ public class ProgrmasBoImpl implements ProgramsBo {
     public ProgramDto getProgram(String programId) {
         TheraphyProgram program = progrmasDao.getProgram(programId);
 
-        ProgramDto programDto = new ProgramDto();
-        programDto.setTheraphy_pro_id(program.getTheraphy_pro_id());
-        programDto.setName(program.getName());
-        programDto.setDescription(program.getDescription());
-        programDto.setDuration(program.getDuration());
-        programDto.setFee(program.getFee());
+        ProgramDto programDto = null;
+        if (program != null) {
+            programDto = new ProgramDto();
+            programDto.setTheraphy_pro_id(program.getTheraphy_pro_id());
+            programDto.setName(program.getName());
+            programDto.setDescription(program.getDescription());
+            programDto.setDuration(program.getDuration());
+            programDto.setFee(program.getFee());
+
+        }
         return programDto;
     }
 

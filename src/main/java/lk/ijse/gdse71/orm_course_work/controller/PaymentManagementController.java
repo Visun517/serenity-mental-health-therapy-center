@@ -385,7 +385,7 @@ public class PaymentManagementController implements Initializable {
         getAll();
         txtAmount.setText("");
         cmbStatus.setValue("");
-        cmbSessionId.setValue("");
+//        cmbSessionId.setValue("");
         cmbPayemntType.setValue("");
         lblProgramNameShow.setText("");
         lblDuePaymentShow.setText("");

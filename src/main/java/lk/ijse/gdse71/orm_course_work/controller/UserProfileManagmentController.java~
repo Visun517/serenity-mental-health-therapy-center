@@ -7,8 +7,6 @@ import javafx.scene.control.*;
 import lk.ijse.gdse71.orm_course_work.bo.BoFactory;
 import lk.ijse.gdse71.orm_course_work.bo.custom.PasswordEncryptBo;
 import lk.ijse.gdse71.orm_course_work.bo.custom.UserBo;
-import lk.ijse.gdse71.orm_course_work.bo.exception.DuplicateException;
-import lk.ijse.gdse71.orm_course_work.bo.exception.MissingFieldException;
 import lk.ijse.gdse71.orm_course_work.dto.UserDto;
 import lk.ijse.gdse71.orm_course_work.userDetails.UserDetails;
 
@@ -136,8 +134,8 @@ public class UserProfileManagmentController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Failed to update your profile!").show();
             }
-        } catch (SQLException | MissingFieldException | DuplicateException e) {
-            new Alert(Alert.AlertType.ERROR, "Failed to update your profile: " + e.getMessage()).show();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
