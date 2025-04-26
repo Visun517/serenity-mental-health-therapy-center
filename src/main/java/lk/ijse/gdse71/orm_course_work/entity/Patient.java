@@ -21,10 +21,10 @@ public class Patient {
     private Date date;
     private String medical_history;
 
-    @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patient" ,cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private List<Payment> payment;
-    @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patient" ,cascade = {CascadeType.REMOVE} , fetch = FetchType.LAZY)
     private List<TheraphySession> sessions;
-    @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient" ,cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<PatientProgramsDetails> patientProgramsDetails;
 }
